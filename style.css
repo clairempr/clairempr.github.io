@@ -1,3 +1,145 @@
-blockquote {
+body{
+  height:100vh;
+}
+
+a {
+  color: #002db3;
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #002080;
+}
+
+footer {
+  color: #4d4d4d;
+  font-size: 1.2rem;
+  height: 55px;
+  margin: 2rem;
+  position: relative;
+}
+
+h1 {
+  color: #193366;
+  font-family: 'Special Elite', sans-serif;
+  font-size: 3.8rem;
+  padding-top: 3rem;
+}
+
+h2 {
+  color: #193366;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  color: #193366;
+}
+
+li {
+  padding-left: 0.8rem;
+}
+
+main {
+  height: 45%;
+  position: relative;
+}
+
+p {
+  font-size: 1.2rem;
+  text-align: justify;
+  text-wrap: normal;
+}
+
+.divider {
+  font-size: 2.8rem;
+  text-align: center;
+  padding: 2.2rem 0 2.2rem;
+}
+
+.end-quote {
+  bottom: -2.6rem;
+}
+
+.first-letter {
+  font-size: 4rem;
+  font-family: 'Ballet', serif;
+  position: relative;
+  bottom: -0.1em;
+}
+
+.first-word {
+  font-size: 2rem;
+  position: relative;
+  bottom: -0.04rem;
+}
+
+.home-image {
+  min-width: 125px;
+}
+
+.large-quotation-mark {
+  color: darkgray;
+  font-size: 4rem;
+  position: relative;
+}
+
+.lead-paragraph {
+  line-height: 2rem;
+  /* hanging indent */
+  padding: 4.9rem 0 0.9rem 0;
+  text-indent: -4.9rem;
+}
+
+.posted {
+  color: #4d4d4d;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.quote {
   background-color: #f2f2f2;
+  font-family: 'Gentium Basic', serif;
+  font-size: 1.8rem;
+  padding: 0.6rem 3rem;
+  margin: 1.2rem 0;
+  width: 50%;
+  text-align: center;
+}
+
+.references-header {
+  font-size: 1.8rem;
+  font-family: inherit;
+  padding: 2.1rem 0 1.2rem 0;
+}
+
+.references-list {
+  font-size: 1.4rem;
+  text-align: left;
+  list-style-type: "\2766";
+}
+
+.start-quote {
+  bottom: -0.9rem;
+}
+
+.stories-list {
+  font-size: 1.4rem;
+  text-align: left;
+  display: table;
+  margin: 0 auto;
+  list-style-type: "\2766";
+}
+
+.story-page-header {
+  text-align: center;
+  padding-top: 2rem;
+  margin-left: -4rem;
+}
+
+.story-title {
+  color: #193366;
+  font-size: 3rem;
+  /*margin-left: 4rem;*/
 }
