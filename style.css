@@ -4,7 +4,6 @@ body{
 
 a {
   color: #002db3;
-  font-size: 1.4rem;
   text-decoration: none;
 }
 
@@ -22,9 +21,8 @@ footer {
 
 h1 {
   color: #193366;
-  font-family: 'Special Elite', sans-serif;
-  font-size: 3.8rem;
-  padding-top: 3rem;
+  font-size: 3.9rem;
+  padding-top: 3.4rem;
 }
 
 h2 {
@@ -42,14 +40,19 @@ li {
 }
 
 main {
-  height: 45%;
+  height: 40%;
   position: relative;
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   text-align: justify;
   text-wrap: normal;
+}
+
+.container {
+  text-align: center;
+  padding: 0;
 }
 
 .divider {
@@ -60,6 +63,10 @@ p {
 
 .end-quote {
   bottom: -2.6rem;
+}
+
+.figure-caption {
+  font-size: 1.2rem;
 }
 
 .first-letter {
@@ -86,15 +93,21 @@ p {
 }
 
 .lead-paragraph {
+  font-size: 1.5rem;
   line-height: 2rem;
   /* hanging indent */
   padding: 4.9rem 0 0.9rem 0;
   text-indent: -4.9rem;
 }
 
+.main-title {
+  font-family: 'Special Elite', sans-serif;
+  padding-top: 5rem;
+}
+
 .posted {
   color: #4d4d4d;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   text-align: center;
 }
 
@@ -102,11 +115,27 @@ p {
   background-color: #f2f2f2;
   font-family: 'Gentium Basic', serif;
   font-size: 1.8rem;
+  line-height: 3rem;
   padding: 0.6rem 3rem;
   margin: 1.2rem 0;
-  width: 50%;
+  width: 75%;
   text-align: center;
 }
+
+/* Bootstrap medium */
+@media (min-width: 768px) {
+  .quote {
+    width: 65%;
+  }
+}
+
+/* Bootstrap large */
+@media (min-width: 992px) {
+  .quote {
+    width: 55%;
+  }
+}
+
 
 .references-header {
   font-size: 1.8rem;
@@ -125,7 +154,7 @@ p {
 }
 
 .stories-list {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   text-align: left;
   display: table;
   margin: 0 auto;
@@ -139,7 +168,6 @@ p {
 }
 
 .story-title {
-  color: #193366;
   font-size: 3rem;
-  /*margin-left: 4rem;*/
+  margin-left: 2rem;
 }
