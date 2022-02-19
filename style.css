@@ -14,9 +14,11 @@ a:visited {
 footer {
   color: #4d4d4d;
   font-size: 1.2rem;
-  height: 55px;
-  margin: 2rem;
-  position: relative;
+  height: 3rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  margin: 1rem;
 }
 
 h1 {
@@ -40,7 +42,6 @@ li {
 }
 
 main {
-  height: 40%;
   position: relative;
 }
 
@@ -51,8 +52,14 @@ p {
 }
 
 .container {
+  position: relative;
+  min-height: 100vh;
   text-align: center;
   padding: 0;
+}
+
+.content-wrap {
+  padding-bottom: 5rem;    /* Footer height */
 }
 
 .divider {
