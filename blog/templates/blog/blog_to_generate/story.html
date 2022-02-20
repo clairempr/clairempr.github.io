@@ -1,0 +1,53 @@
+{% extends "blog/blog_to_generate/base.html" %}
+
+{% block header %}
+  <div class="row">
+    <span class="col-2">
+      <a href="https://clairempr.github.io">
+        <img src="https://clairempr.github.io/images/quick_and_dirty_wordcloud.png" class="img-fluid home-image"
+             alt="Home">
+      </a>
+    </span>
+    <h1 class="col-8 story-title">{{ story_title }}</h1>
+    <span class="col-2"></span>
+  </div>
+{% endblock header %}
+
+{% block main %}
+  <article>
+
+    <p class="posted pb-3">{{ posted }}</p>
+
+    <div class="divider">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+    {% for element in story_content %}
+      {{ element }}
+    {% endfor %}
+
+    {% if references %}
+      <h3 class="references-header">References</h3>
+      <ul class="references-list">
+        {% for reference in references %}
+          <li>{{ reference }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+  </article>
+
+  <div class="giscus"></div>
+  <script src="https://giscus.app/client.js"
+          data-repo="clairempr/clairempr.github.io"
+          data-repo-id="R_kgDOG1uCQw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOG1uCQ84CBPtP"
+          data-mapping="title"
+          data-reactions-enabled="0"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+  </script>
+{% endblock main %}

@@ -1,0 +1,27 @@
+h1 {
+  color: #193366;
+  font-family: 'Special Elite', sans-serif;
+  font-size: 3.9rem;
+  padding-top: 3.4rem;
+}
+
+h3 {
+  color: #193366;
+  font-family: 'Special Elite', sans-serif;
+  padding-top: 3rem;
+}
+
+.container {
+  text-align: center;
+  padding: 0;
+}
+
+.divider {
+  font-size: 2.8rem;
+  text-align: center;
+  padding: 2.2rem 0 2.2rem;
+}
+
+.main-title {
+  padding-top: 5rem;
+}
