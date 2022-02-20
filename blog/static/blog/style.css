@@ -25,3 +25,9 @@ h3 {
 .main-title {
   padding-top: 5rem;
 }
+
+.story-input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
