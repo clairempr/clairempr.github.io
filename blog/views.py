@@ -54,22 +54,18 @@ class GenerateBlogView(TemplateView):
         """
 
         # Main index page
-        print('Removing ', settings.OUTPUT_DIR / 'index.html')
-        # os.remove(settings.OUTPUT_DIR / 'index.html')
+        os.remove(settings.OUTPUT_DIR / 'index.html')
 
         # Stylesheet
-        print('Removing ', settings.OUTPUT_DIR / 'style.css')
-        # os.remove(settings.OUTPUT_DIR / 'style.css')
+        os.remove(settings.OUTPUT_DIR / 'style.css')
 
         # Pages
         for file in os.listdir(settings.OUTPUT_PAGES_DIR):
-            print('Removing ', settings.OUTPUT_PAGES_DIR, file)
-            # os.remove(settings.OUTPUT_PAGES_DIR, file)
+            os.remove(settings.OUTPUT_PAGES_DIR / file)
 
         # Images
         for file in os.listdir(settings.OUTPUT_IMAGES_DIR):
-            print('Removing ', settings.OUTPUT_IMAGES_DIR, file)
-            # os.remove(settings.OUTPUT_IMAGES_DIR / file)
+            os.remove(settings.OUTPUT_IMAGES_DIR / file)
 
 
     def copy_static_files(self):
@@ -82,8 +78,7 @@ class GenerateBlogView(TemplateView):
                 if not file.endswith('.md'):
                     source = os.path.join(root, file)
                     destination = source.replace(str(settings.INPUT_DIR), str(settings.OUTPUT_DIR))
-                    print('Copying {} to {}'.format(source, destination))
-                    # shutil.copy(source, destination)
+                    shutil.copy(source, destination)
 
     def generate_story_pages(self):
         """

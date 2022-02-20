@@ -33,7 +33,6 @@ def parse_markdown_file(filename):
                         elements[markdown_mapping[key]] = line.lstrip(key)
                     elif markdown_mapping[key] in ['story_list_title']:
                         elements[markdown_mapping[key]] = line[len(key):-len(key)]
-                        print(elements[markdown_mapping[key]])
                     elif markdown_mapping[key] == 'references':
                         elements['references'] = []
                     elif markdown_mapping[key] == 'li' and 'references' in elements:
