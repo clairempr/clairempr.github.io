@@ -13,8 +13,8 @@ a:visited {
 
 footer {
   color: #4d4d4d;
-  font-size: 1.2rem;
-  height: 3rem;
+  font-size: 1.4rem;
+  height: 3.4rem;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -46,9 +46,10 @@ main {
 }
 
 p {
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   text-align: justify;
   text-wrap: normal;
+  padding: 0.3rem 0 0.3rem 0;
 }
 
 .container {
@@ -59,7 +60,8 @@ p {
 }
 
 .content-wrap {
-  padding-bottom: 5rem;    /* Footer height */
+  padding-bottom: 6.8rem;    /* Footer height */
+  margin: 0 -2.6rem;
 }
 
 .divider {
@@ -73,14 +75,14 @@ p {
 }
 
 .figure-caption {
-  font-size: 1.2rem;
+  font-size: 1.7rem;
 }
 
 .first-letter {
   font-size: 4rem;
   font-family: 'Ballet', serif;
   position: relative;
-  bottom: -0.1em;
+  bottom: -0.1rem;
 }
 
 .first-word {
@@ -91,6 +93,8 @@ p {
 
 .home-image {
   min-width: 125px;
+  padding-top: 2rem;
+  margin-bottom: -1.2rem;
 }
 
 .large-quotation-mark {
@@ -100,16 +104,15 @@ p {
 }
 
 .lead-paragraph {
-  font-size: 1.5rem;
-  line-height: 2rem;
-  /* hanging indent */
-  padding: 4.9rem 0 0.9rem 0;
-  text-indent: -4.9rem;
+  font-size: 1.9rem;
+  line-height: 2.7rem;
+  padding: 1.1em 0 0.9rem 0;
+  text-indent: -4rem;
 }
 
 .main-title {
   font-family: 'Special Elite', sans-serif;
-  padding-top: 5rem;
+  padding-top: 7rem;
 }
 
 .posted {
@@ -121,37 +124,36 @@ p {
 .quote {
   background-color: #f2f2f2;
   font-family: 'Gentium Basic', serif;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   line-height: 3rem;
-  padding: 0.6rem 3rem;
-  margin: 1.2rem 0;
-  width: 75%;
+  padding: 1.4rem 2.8rem 1.5rem 2.8rem;
+  margin: 0.4rem 0 1.7rem 0;
+  width: 80%;
   text-align: center;
 }
 
 /* Bootstrap medium */
 @media (min-width: 768px) {
   .quote {
-    width: 65%;
+    width: 70%;
   }
 }
 
 /* Bootstrap large */
 @media (min-width: 992px) {
   .quote {
-    width: 55%;
+    width: 60%;
   }
 }
 
-
 .references-header {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-family: inherit;
   padding: 2.1rem 0 1.2rem 0;
 }
 
 .references-list {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   text-align: left;
   list-style-type: "\2766";
 }
@@ -161,7 +163,7 @@ p {
 }
 
 .stories-list {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   text-align: left;
   display: table;
   margin: 0 auto;
