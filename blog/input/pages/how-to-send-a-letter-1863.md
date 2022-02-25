@@ -1,6 +1,6 @@
 # How to Send a Letter from North Carolina to Pennsylvania in 1863
 
-**How to send a letter from North Carolina to Pennsylvania in 1863**
+#### How to send a letter from North Carolina to Pennsylvania in 1863  
 
 ## Posted Feb. 16, 2022
 

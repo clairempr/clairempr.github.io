@@ -52,6 +52,15 @@ p {
   padding: 0.3rem 0 0.3rem 0;
 }
 
+.code-block {
+  color: whitesmoke;
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  text-align: left;
+  background-color: black;
+  padding: 1rem 0 0 2.2rem;
+}
+
 .container {
   position: relative;
   min-height: 100vh;

@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Testing Conditionals in the Django Settings File</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Ballet|Gentium+Basic|Special+Elite|Fira+Code" rel="stylesheet"
+        type="text/css">
+  <link href="https://clairempr.github.io/style.css" rel="stylesheet">
+
+  <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
+  <!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<div class="container">
+  <div class="content-wrap">
+
+    <header>
+      
+  <div class="row">
+    <span class="col-2">
+      <a href="https://clairempr.github.io">
+        <img src="https://clairempr.github.io/images/quick_and_dirty_wordcloud.png" class="img-fluid home-image"
+             alt="Home">
+      </a>
+    </span>
+    <h1 class="col-8 story-title">Testing Conditionals in the Django Settings File</h1>
+    <span class="col-2"></span>
+  </div>
+
+    </header>
+
+    <main>
+      
+  <article>
+
+    <p class="posted pb-3">Posted Feb. 25, 2022</p>
+
+    <div class="divider">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+    
+      <p class="lead lead-paragraph">
+  <span class="first-letter">I</span>
+  <span class="first-word"></span>have an old Django project where I'm working on achieving 100% unit test coverage to prepare for a major overhaul, so I find myself writing unit tests for the sorts of things that Django developers might not normally get around to. Recently I was struggling to test a situation in my Django settings file where I have GeoDjango-related settings that are different for Windows than they are for Linux. I run the application under Docker myself, so it's always Linux, but I wanted to leave these settings intact for now.
+</p>
+    
+      <div class="code-block">
+  <pre>
+    
+
+# Where to find SpatiaLite and GDAL libraries, necessary to support geodatabase stuff in SQLite
+
+if platform.system() == &#x27;Windows&#x27;:
+
+    # For Windows, use the following setting. Get mod_spatialite from http://www.gaia-gis.it/gaia-sins/
+
+    # Put all DLLs in the same directory with the Python executable (system and probably also virtualenv)
+
+    SPATIALITE_LIBRARY_PATH = &#x27;mod_spatialite&#x27;
+
+    # For Windows, set the location of the GDAL DLL and add the GDAL directory to your PATH for the other DLLs
+
+    # Under Linux it doesn&#x27;t seem to be necessary
+
+    GDAL_LIBRARY_PATH = &#x27;C:\Program Files\GDAL\gdal201.dll&#x27;
+
+    # A Fallback
+
+    DB_DIR = BASE_DIR
+
+else:
+
+    # For Linux
+
+    SPATIALITE_LIBRARY_PATH = &#x27;/usr/local/lib/mod_spatialite.so&#x27;
+
+  </pre>
+</div>
+    
+      <p>I knew how to mock platform.system(), but I was tearing my hair out trying to figure out how to test both conditions. The settings had already been loaded by the time the testrunner got to my tests, so whatever was set at the time was what I got. After a lot of googling, and combing Stack Overflow and various blog entries, I came to the conclusion that this isn't something that people really test, or at least not often.</p>
+    
+      <p>An unanswered <a href="https://stackoverflow.com/questions/62582344/testing-django-settings-behavior-with-unittest-and-python">question on Stack Overflow</a> pointed me to <code>importlib.reload</code>, so I gave it a shot. The settings file was imported in my test file as <code>from django.conf import settings</code>, which is how the Django docs say that it should be done. This is how I usually import it too, but I got the following error with <code>importlib.reload(settings)</code>:</p>
+    
+      <div class="code-block">
+  <pre>
+    
+
+======================================================================
+
+ERROR: test_settings_for_linux (letterpress.tests.test_settings.TestSettingsForLinuxTestCase)
+
+----------------------------------------------------------------------
+
+Traceback (most recent call last):
+
+  File &quot;/usr/local/lib/python3.5/unittest/mock.py&quot;, line 1159, in patched
+
+    return func(*args, **keywargs)
+
+  File &quot;/code/letterpress/tests/test_settings.py&quot;, line 29, in test_settings_for_linux
+
+    importlib.reload(settings)
+
+  File &quot;/usr/local/lib/python3.5/importlib/__init__.py&quot;, line 139, in reload
+
+    raise TypeError(&quot;reload() argument must be a module&quot;)
+
+TypeError: reload() argument must be a module
+
+
+
+  </pre>
+</div>
+    
+      <p>Clearly that wasn't the way to go. After a lot of trial and error and taking another look at that Stack Overflow question, I found the solution. If I imported my application's Django settings directly (i.e. <code>import letterpress.settings</code>), I finally got reloading the settings to work by using <code>importlib.reload(letterpress.settings)</code>.</p>
+    
+      <p>Here's the finished product, using <code>patch</code> to switch between Linux and Windows:</p>
+    
+      <div class="code-block">
+  <pre>
+    
+
+import importlib
+
+
+
+from unittest.mock import patch
+
+
+
+from django.conf import settings
+
+from django.test import SimpleTestCase
+
+
+
+# Normally Django settings should be imported as &quot;from django.conf import settings&quot;
+
+# but here we need to import our settings module explicitly so we can manually reload it
+
+import letterpress.settings
+
+
+
+
+
+class TestGeoDjangoSettingsTestCase(SimpleTestCase):
+
+    &quot;&quot;&quot;
+
+    SPATIALITE_LIBRARY_PATH and GDAL_LIBRARY_PATH settings
+
+    should be different for Linux and Windows
+
+    &quot;&quot;&quot;
+
+
+
+    @patch(&#x27;platform.system&#x27;, autospec=True)
+
+    def test_settings_for_linux(self, mock_system):
+
+        &quot;&quot;&quot;
+
+        GDAL_LIBRARY_PATH should be set for Windows only
+
+        If platform.system() returns something else, settings.GDAL_LIBRARY_PATH shouldn&#x27;t be set
+
+        &quot;&quot;&quot;
+
+
+
+        # Mock platform.system() to have it return &#x27;Linux&#x27;
+
+        mock_system.return_value = &#x27;Linux&#x27;
+
+
+
+        # Reload Django settings
+
+        importlib.reload(letterpress.settings)
+
+
+
+        self.assertTrue(letterpress.settings.SPATIALITE_LIBRARY_PATH.endswith(&#x27;.so&#x27;),
+
+                        &quot;On Linux, SPATIALITE_LIBRARY_PATH should end with &#x27;.so&#x27;&quot;)
+
+
+
+        with self.assertRaises(AttributeError):
+
+            print(letterpress.settings.GDAL_LIBRARY_PATH)
+
+
+
+    @patch(&#x27;platform.system&#x27;, autospec=True)
+
+    def test_settings_for_windows(self, mock_system):
+
+        &quot;&quot;&quot;
+
+        GDAL_LIBRARY_PATH should be set for Windows only
+
+        If platform.system() returns &#x27;Windows&#x27;, settings.GDAL_LIBRARY_PATH should be set
+
+        &quot;&quot;&quot;
+
+
+
+        # Mock platform.system() to have it return &#x27;Windows&#x27;
+
+        mock_system.return_value = &#x27;Windows&#x27;
+
+
+
+        # Reload Django settings
+
+        importlib.reload(letterpress.settings)
+
+
+
+        self.assertFalse(letterpress.settings.SPATIALITE_LIBRARY_PATH.endswith(&#x27;.so&#x27;),
+
+                         &quot;On Windows, SPATIALITE_LIBRARY_PATH should not end with &#x27;.so&#x27;&quot;)
+
+
+
+        self.assertFalse(letterpress.settings.GDAL_LIBRARY_PATH == None,
+
+                         &#x27;On Windows, GDAL_LIBRARY_PATH should be set&#x27;)
+
+  </pre>
+</div>
+    
+
+    
+
+  </article>
+
+    </main>
+
+    <footer>
+      <span>© 2022 Claire Pritchard</span>
+    </footer>
+
+  </div>
+</div>
+
+</body>
+
+</html>

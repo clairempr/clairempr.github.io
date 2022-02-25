@@ -1,9 +1,11 @@
 import glob
+from markdown import Markdown
 import os
 import re
 import shutil
 
 from datetime import datetime
+from os.path import exists
 
 from django.conf import settings
 from django.shortcuts import render
@@ -54,10 +56,14 @@ class GenerateBlogView(TemplateView):
         """
 
         # Main index page
-        os.remove(settings.OUTPUT_DIR / 'index.html')
+        path_to_file = settings.OUTPUT_DIR / 'index.html'
+        if exists(path_to_file):
+            os.remove(path_to_file)
 
         # Stylesheet
-        os.remove(settings.OUTPUT_DIR / 'style.css')
+        path_to_file = settings.OUTPUT_DIR / 'style.css'
+        if exists(path_to_file):
+            os.remove(path_to_file)
 
         # Pages
         for file in os.listdir(settings.OUTPUT_PAGES_DIR):
@@ -113,8 +119,12 @@ class GenerateBlogView(TemplateView):
 
         context['story_title'] = markdown_elements['story_title']
         context['posted'] = markdown_elements['posted']
-        context['story_content'] = render_story_content(markdown_elements['story_content'])
-        context['references'] = render_references(markdown_elements['references'])
+
+        if 'story_content' in markdown_elements:
+            context['story_content'] = render_story_content(markdown_elements['story_content'])
+
+        if 'references' in markdown_elements:
+            context['references'] = render_references(markdown_elements['references'])
 
         html_string = render_to_string(settings.STORY_TEMPLATE, context)
         html_file_path = settings.OUTPUT_PAGES_DIR / html_filename
@@ -231,6 +241,8 @@ def render_story_content(elements):
             html = render_blockquote(element_content)
         elif element_type == 'image':
             html = render_image(element_content)
+        elif element_type == 'code':
+            html = render_code(element_content)
 
         story_content.append(html)
 
@@ -241,6 +253,12 @@ def render_blockquote(element_content):
     quote = element_content.split('> ')[0]
     html = render_to_string('blog/blog_to_generate/partials/blockquote.html',
                             context={'quote': quote})
+    return html
+
+
+def render_code(element_content):
+    html = render_to_string('blog/blog_to_generate/partials/code_block.html',
+                            context={'code_block': element_content})
     return html
 
 
@@ -264,18 +282,29 @@ def render_image(element_content):
 
 
 def render_lead_paragraph(element_content):
+    # Paragraph might contain links or other inline markdown elements,
+    # so convert it to html with markdown package, but strip off outer paragraph tags
+    # because they'll show up as text
+    md = Markdown()
+
     first_word = element_content.split(' ')[0]
-    rest_of_paragraph = element_content.lstrip(first_word)
+    rest_of_paragraph = md.convert(element_content.lstrip(first_word)).lstrip('<p>').rstrip('</p>')
+    print(rest_of_paragraph)
     html = render_to_string('blog/blog_to_generate/partials/lead_paragraph.html',
                             context={'first_letter': first_word[0],
                                      'rest_of_first_word': first_word[1:],
-                                     'rest_of_paragraph': rest_of_paragraph})
+                                     'rest_of_paragraph': format_html(rest_of_paragraph)})
     return html
 
 
 def render_paragraph(element_content):
+    # Paragraph might contain links or other inline markdown elements,
+    # so convert it to html with markdown package, but strip off outer paragraph tags
+    # because they'll show up as text
+    md = Markdown()
+
     html = render_to_string('blog/blog_to_generate/partials/paragraph.html',
-                            context={'paragraph': element_content})
+                            context={'paragraph': format_html(md.convert(element_content))})
     return html
 
 
