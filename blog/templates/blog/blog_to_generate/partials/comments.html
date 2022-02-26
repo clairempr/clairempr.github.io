@@ -1,4 +1,5 @@
 <form method="POST" action="{{ staticman_url }}">
+  <input name="options[redirect]" type="hidden" value=".">
   <!-- e.g. "2016-01-02-this-is-a-post" -->
   <input name="options[slug]" type="hidden" value="{{ page.slug }}">
   <label><input name="fields[name]" type="text">Name</label>
