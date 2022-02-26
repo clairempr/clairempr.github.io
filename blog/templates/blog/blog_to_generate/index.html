@@ -2,6 +2,17 @@
 
 {% block title %}{{ page_title }}{% endblock title %}
 
+{%  block stylesheets %}
+  {{ block.super }}
+  <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet"
+        type="text/css">
+  {% if local_blog %}
+    <link href="style.css" rel="stylesheet">
+  {% else %}
+    <link href="https://clairempr.github.io/style.css" rel="stylesheet">
+  {% endif %}
+{% endblock stylesheets %}
+
 {% block header %}
   <h1 class="display-1 main-title">{{ page_title }}</h1>
 {% endblock header %}

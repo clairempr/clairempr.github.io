@@ -17,7 +17,6 @@ from blog.markdown_utils import parse_markdown_file
 
 
 class HomeView(TemplateView):
-
     template_name = 'blog/home.html'
 
 
@@ -30,8 +29,17 @@ class GenerateBlogView(TemplateView):
 
     template_name = "blog/blog_to_generate/index.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    # Urls for pages and css files in generated pages need to point to their locations
+    # at github.io, and not to local copies
+    local_blog = False
+
+    def get(self, request, *args, **kwargs):
+        """
+        Remove existing output files (html, images, css)
+
+        Create new index page and story pages, and copy css and image files
+        from input dirs to output
+        """
 
         # Make sure we're starting with clean output
         self.remove_output_files()
@@ -39,14 +47,23 @@ class GenerateBlogView(TemplateView):
         # Copy static files from input directory to output directory
         self.copy_static_files()
 
-        stories = self.generate_story_pages()
-
-        context['page_title'] = settings.BLOG_TITLE
-        context['stories'] = stories
+        context = self.get_context_data(**kwargs)
 
         # Generate index page
         html_string = render_to_string(self.template_name, context)
         self.save_index_page(html=html_string)
+
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['local_blog'] = self.local_blog
+        context['page_title'] = settings.BLOG_TITLE
+
+        stories = self.generate_story_pages()
+
+        context['stories'] = stories
 
         return context
 
@@ -61,7 +78,8 @@ class GenerateBlogView(TemplateView):
             os.remove(path_to_file)
 
         # Stylesheets
-        for stylesheet in ['style.css', 'codehilite.css']:
+        stylesheets = glob.glob(str(settings.OUTPUT_DIR) + '/*.css')
+        for stylesheet in stylesheets:
             path_to_file = settings.OUTPUT_DIR / stylesheet
             if exists(path_to_file):
                 os.remove(path_to_file)
@@ -115,7 +133,8 @@ class GenerateBlogView(TemplateView):
         """
         Generate a story page using elements from the markdown file to fill the template
         """
-        context = {}
+
+        context = {'local_blog': self.local_blog}
 
         context['story_title'] = markdown_elements['story_title']
         context['posted'] = markdown_elements['posted']
@@ -143,6 +162,18 @@ class GenerateBlogView(TemplateView):
 
         with open(filename, 'w+') as f:
             f.write(html)
+
+
+class GenerateLocalBlogView(GenerateBlogView):
+    """
+    The only difference between GenerateLocalBlogView and GenerateBlogView
+    is that GenerateLocalBlogView creates pages with paths pointing to local
+    copies of pages and css files
+    """
+
+    # Urls for pages and css files in generated pages need to point to local copies,
+    # not to their locations at github.io
+    local_blog = True
 
 
 class GeneratedIndexView(TemplateView):

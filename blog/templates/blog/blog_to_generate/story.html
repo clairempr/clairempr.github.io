@@ -2,12 +2,31 @@
 
 {% block title %}{{ story_title }}{% endblock title %}
 
+{%  block stylesheets %}
+  {{ block.super }}
+  <link href="https://fonts.googleapis.com/css?family=Ballet|Gentium+Basic" rel="stylesheet"
+        type="text/css">
+  {% if local_blog %}
+    <link href="../codehilite.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+  {% else %}
+    <link href="https://clairempr.github.io/codehilite.css" rel="stylesheet">
+    <link href="https://clairempr.github.io/style.css" rel="stylesheet">
+  {% endif %}
+{% endblock stylesheets %}
+
 {% block header %}
   <div class="row">
     <span class="col-2">
-      <a href="https://clairempr.github.io">
+      {% if local_blog %}
+        <a href="../index.html">
+        <img src="../images/quick_and_dirty_wordcloud.png" class="img-fluid home-image"
+             alt="Home">
+      {% else %}
+        <a href="https://clairempr.github.io">
         <img src="https://clairempr.github.io/images/quick_and_dirty_wordcloud.png" class="img-fluid home-image"
              alt="Home">
+      {% endif %}
       </a>
     </span>
     <h1 class="col-8 story-title">{{ story_title }}</h1>
