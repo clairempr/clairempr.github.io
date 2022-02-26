@@ -46,18 +46,24 @@ main {
 }
 
 p {
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   text-align: justify;
   text-wrap: normal;
   padding: 0.3rem 0 0.3rem 0;
 }
 
+/* Bootstrap small */
+@media (min-width: 576px) {
+  p {
+  font-size: 1.6rem;
+  }
+}
+
 .code-block {
-  color: whitesmoke;
-  font-size: 1.4rem;
-  line-height: 1.4rem;
+  font-size: 1.6rem;
+  line-height: 1rem;
   text-align: left;
-  background-color: black;
+  background-color: #f2f2f2;
   padding: 1rem 0 0 2.2rem;
 }
 
@@ -65,7 +71,14 @@ p {
   position: relative;
   min-height: 100vh;
   text-align: center;
-  padding: 0;
+  padding: 1.5rem;
+}
+
+/* Bootstrap small */
+@media (min-width: 576px) {
+  .container {
+  padding: 1.8rem;
+  }
 }
 
 .content-wrap {
@@ -84,14 +97,23 @@ p {
 }
 
 .figure-caption {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 }
 
 .first-letter {
-  font-size: 4rem;
+  font-size: 2rem;
   font-family: 'Ballet', serif;
+  margin-right: -0.3rem;
+  padding-right: 0.6rem;
   position: relative;
   bottom: -0.1rem;
+}
+
+/* Bootstrap small */
+@media (min-width: 576px) {
+  .first-letter {
+  font-size: 3rem;
+  }
 }
 
 .first-word {
@@ -113,10 +135,24 @@ p {
 }
 
 .lead-paragraph {
-  font-size: 1.9rem;
-  line-height: 2.7rem;
-  padding: 1.1em 0 0.9rem 0;
-  text-indent: -4rem;
+  font-size: 2.3rem;
+  line-height: 2.4rem;
+  padding: 1.1rem 0 0.9rem 0;
+  text-indent: -0.2rem;
+}
+
+/* Bootstrap small */
+@media (min-width: 576px) {
+  .lead-paragraph {
+  font-size: 1.6rem;
+  }
+}
+
+/* Bootstrap large */
+@media (min-width: 992px) {
+  .lead-paragraph {
+  font-size: 1.7rem;
+  }
 }
 
 .main-title {
@@ -133,7 +169,7 @@ p {
 .quote {
   background-color: #f2f2f2;
   font-family: 'Gentium Basic', serif;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   line-height: 3rem;
   padding: 1.4rem 2.8rem 1.5rem 2.8rem;
   margin: 0.4rem 0 1.7rem 0;

@@ -35,12 +35,12 @@ def parse_markdown_file(filename):
                     if markdown_mapping[key] == 'code':
                         if line.startswith(key):
                             code_block = []
+                            code_block.append(line)
                             line = ''
 
                             while not line.startswith(key):
                                 line = next(markdown)
-                                if not line.startswith(key):
-                                    code_block.append(line)
+                                code_block.append(line)
 
                             if 'story_content' not in elements:
                                 elements['story_content'] = []

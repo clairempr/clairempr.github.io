@@ -10,6 +10,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Ballet|Gentium+Basic|Special+Elite|Fira+Code" rel="stylesheet"
         type="text/css">
+  <link href="https://clairempr.github.io/codehilite.css" rel="stylesheet">
   <link href="https://clairempr.github.io/style.css" rel="stylesheet">
 
   <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
@@ -54,34 +55,32 @@
     
       <div class="code-block">
   <pre>
-    
+    <div class="codehilite"><pre><span></span><code><span class="c1"># Where to find SpatiaLite and GDAL libraries, necessary to support geodatabase stuff in SQLite</span>
 
-# Where to find SpatiaLite and GDAL libraries, necessary to support geodatabase stuff in SQLite
+<span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Windows&#39;</span><span class="p">:</span>
 
-if platform.system() == &#x27;Windows&#x27;:
+    <span class="c1"># For Windows, use the following setting. Get mod_spatialite from http://www.gaia-gis.it/gaia-sins/</span>
 
-    # For Windows, use the following setting. Get mod_spatialite from http://www.gaia-gis.it/gaia-sins/
+    <span class="c1"># Put all DLLs in the same directory with the Python executable (system and probably also virtualenv)</span>
 
-    # Put all DLLs in the same directory with the Python executable (system and probably also virtualenv)
+    <span class="n">SPATIALITE_LIBRARY_PATH</span> <span class="o">=</span> <span class="s1">&#39;mod_spatialite&#39;</span>
 
-    SPATIALITE_LIBRARY_PATH = &#x27;mod_spatialite&#x27;
+    <span class="c1"># For Windows, set the location of the GDAL DLL and add the GDAL directory to your PATH for the other DLLs</span>
 
-    # For Windows, set the location of the GDAL DLL and add the GDAL directory to your PATH for the other DLLs
+    <span class="c1"># Under Linux it doesn&#39;t seem to be necessary</span>
 
-    # Under Linux it doesn&#x27;t seem to be necessary
+    <span class="n">GDAL_LIBRARY_PATH</span> <span class="o">=</span> <span class="s1">&#39;C:\Program Files\GDAL\gdal201.dll&#39;</span>
 
-    GDAL_LIBRARY_PATH = &#x27;C:\Program Files\GDAL\gdal201.dll&#x27;
+    <span class="c1"># A Fallback</span>
 
-    # A Fallback
+    <span class="n">DB_DIR</span> <span class="o">=</span> <span class="n">BASE_DIR</span>
 
-    DB_DIR = BASE_DIR
+<span class="k">else</span><span class="p">:</span>
 
-else:
+    <span class="c1"># For Linux</span>
 
-    # For Linux
-
-    SPATIALITE_LIBRARY_PATH = &#x27;/usr/local/lib/mod_spatialite.so&#x27;
-
+    <span class="n">SPATIALITE_LIBRARY_PATH</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/lib/mod_spatialite.so&#39;</span>
+</code></pre></div>
   </pre>
 </div>
     
@@ -91,32 +90,28 @@ else:
     
       <div class="code-block">
   <pre>
-    
+    <div class="codehilite"><pre><span></span><code><span class="o">======================================================================</span><span class="w"></span>
 
-======================================================================
+<span class="n">ERROR</span><span class="p">:</span><span class="w"> </span><span class="n">test_settings_for_linux</span><span class="w"> </span><span class="p">(</span><span class="n">letterpress</span><span class="o">.</span><span class="n">tests</span><span class="o">.</span><span class="n">test_settings</span><span class="o">.</span><span class="n">TestSettingsForLinuxTestCase</span><span class="p">)</span><span class="w"></span>
 
-ERROR: test_settings_for_linux (letterpress.tests.test_settings.TestSettingsForLinuxTestCase)
+<span class="o">----------------------------------------------------------------------</span><span class="w"></span>
 
-----------------------------------------------------------------------
+<span class="n">Traceback</span><span class="w"> </span><span class="p">(</span><span class="n">most</span><span class="w"> </span><span class="n">recent</span><span class="w"> </span><span class="n">call</span><span class="w"> </span><span class="n">last</span><span class="p">):</span><span class="w"></span>
 
-Traceback (most recent call last):
+<span class="w">  </span><span class="n">File</span><span class="w"> </span><span class="s2">&quot;/usr/local/lib/python3.5/unittest/mock.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">1159</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">patched</span><span class="w"></span>
 
-  File &quot;/usr/local/lib/python3.5/unittest/mock.py&quot;, line 1159, in patched
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">keywargs</span><span class="p">)</span><span class="w"></span>
 
-    return func(*args, **keywargs)
+<span class="w">  </span><span class="n">File</span><span class="w"> </span><span class="s2">&quot;/code/letterpress/tests/test_settings.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">test_settings_for_linux</span><span class="w"></span>
 
-  File &quot;/code/letterpress/tests/test_settings.py&quot;, line 29, in test_settings_for_linux
+<span class="w">    </span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span><span class="w"></span>
 
-    importlib.reload(settings)
+<span class="w">  </span><span class="n">File</span><span class="w"> </span><span class="s2">&quot;/usr/local/lib/python3.5/importlib/__init__.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">139</span><span class="p">,</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">reload</span><span class="w"></span>
 
-  File &quot;/usr/local/lib/python3.5/importlib/__init__.py&quot;, line 139, in reload
+<span class="w">    </span><span class="n">raise</span><span class="w"> </span><span class="n">TypeError</span><span class="p">(</span><span class="s2">&quot;reload() argument must be a module&quot;</span><span class="p">)</span><span class="w"></span>
 
-    raise TypeError(&quot;reload() argument must be a module&quot;)
-
-TypeError: reload() argument must be a module
-
-
-
+<span class="n">TypeError</span><span class="p">:</span><span class="w"> </span><span class="n">reload</span><span class="p">()</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">module</span><span class="w"></span>
+</code></pre></div>
   </pre>
 </div>
     
@@ -126,118 +121,114 @@ TypeError: reload() argument must be a module
     
       <div class="code-block">
   <pre>
-    
+    <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">importlib</span>
 
-import importlib
 
 
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span>
 
-from unittest.mock import patch
 
 
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
 
-from django.conf import settings
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">SimpleTestCase</span>
 
-from django.test import SimpleTestCase
 
 
+<span class="c1"># Normally Django settings should be imported as &quot;from django.conf import settings&quot;</span>
 
-# Normally Django settings should be imported as &quot;from django.conf import settings&quot;
+<span class="c1"># but here we need to import our settings module explicitly so we can manually reload it</span>
 
-# but here we need to import our settings module explicitly so we can manually reload it
+<span class="kn">import</span> <span class="nn">letterpress.settings</span>
 
-import letterpress.settings
 
 
+<span class="k">class</span> <span class="nc">TestGeoDjangoSettingsTestCase</span><span class="p">(</span><span class="n">SimpleTestCase</span><span class="p">):</span>
 
+    <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="sd">    SPATIALITE_LIBRARY_PATH and GDAL_LIBRARY_PATH settings</span>
 
-class TestGeoDjangoSettingsTestCase(SimpleTestCase):
+<span class="sd">    should be different for Linux and Windows</span>
 
-    &quot;&quot;&quot;
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    SPATIALITE_LIBRARY_PATH and GDAL_LIBRARY_PATH settings
 
-    should be different for Linux and Windows
 
-    &quot;&quot;&quot;
+    <span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;platform.system&#39;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">test_settings_for_linux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_system</span><span class="p">):</span>
 
+        <span class="sd">&quot;&quot;&quot;</span>
 
-    @patch(&#x27;platform.system&#x27;, autospec=True)
+<span class="sd">        GDAL_LIBRARY_PATH should be set for Windows only</span>
 
-    def test_settings_for_linux(self, mock_system):
+<span class="sd">        If platform.system() returns something else, settings.GDAL_LIBRARY_PATH shouldn&#39;t be set</span>
 
-        &quot;&quot;&quot;
+<span class="sd">        &quot;&quot;&quot;</span>
 
-        GDAL_LIBRARY_PATH should be set for Windows only
 
-        If platform.system() returns something else, settings.GDAL_LIBRARY_PATH shouldn&#x27;t be set
 
-        &quot;&quot;&quot;
+        <span class="c1"># Mock platform.system() to have it return &#39;Linux&#39;</span>
 
+        <span class="n">mock_system</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s1">&#39;Linux&#39;</span>
 
 
-        # Mock platform.system() to have it return &#x27;Linux&#x27;
 
-        mock_system.return_value = &#x27;Linux&#x27;
+        <span class="c1"># Reload Django settings</span>
 
+        <span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">letterpress</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
 
 
-        # Reload Django settings
 
-        importlib.reload(letterpress.settings)
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">letterpress</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">SPATIALITE_LIBRARY_PATH</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.so&#39;</span><span class="p">),</span>
 
+                        <span class="s2">&quot;On Linux, SPATIALITE_LIBRARY_PATH should end with &#39;.so&#39;&quot;</span><span class="p">)</span>
 
 
-        self.assertTrue(letterpress.settings.SPATIALITE_LIBRARY_PATH.endswith(&#x27;.so&#x27;),
 
-                        &quot;On Linux, SPATIALITE_LIBRARY_PATH should end with &#x27;.so&#x27;&quot;)
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
 
+            <span class="nb">print</span><span class="p">(</span><span class="n">letterpress</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">GDAL_LIBRARY_PATH</span><span class="p">)</span>
 
 
-        with self.assertRaises(AttributeError):
 
-            print(letterpress.settings.GDAL_LIBRARY_PATH)
+    <span class="nd">@patch</span><span class="p">(</span><span class="s1">&#39;platform.system&#39;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">test_settings_for_windows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_system</span><span class="p">):</span>
 
+        <span class="sd">&quot;&quot;&quot;</span>
 
-    @patch(&#x27;platform.system&#x27;, autospec=True)
+<span class="sd">        GDAL_LIBRARY_PATH should be set for Windows only</span>
 
-    def test_settings_for_windows(self, mock_system):
+<span class="sd">        If platform.system() returns &#39;Windows&#39;, settings.GDAL_LIBRARY_PATH should be set</span>
 
-        &quot;&quot;&quot;
+<span class="sd">        &quot;&quot;&quot;</span>
 
-        GDAL_LIBRARY_PATH should be set for Windows only
 
-        If platform.system() returns &#x27;Windows&#x27;, settings.GDAL_LIBRARY_PATH should be set
 
-        &quot;&quot;&quot;
+        <span class="c1"># Mock platform.system() to have it return &#39;Windows&#39;</span>
 
+        <span class="n">mock_system</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s1">&#39;Windows&#39;</span>
 
 
-        # Mock platform.system() to have it return &#x27;Windows&#x27;
 
-        mock_system.return_value = &#x27;Windows&#x27;
+        <span class="c1"># Reload Django settings</span>
 
+        <span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">letterpress</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
 
 
-        # Reload Django settings
 
-        importlib.reload(letterpress.settings)
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">letterpress</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">SPATIALITE_LIBRARY_PATH</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.so&#39;</span><span class="p">),</span>
 
+                         <span class="s2">&quot;On Windows, SPATIALITE_LIBRARY_PATH should not end with &#39;.so&#39;&quot;</span><span class="p">)</span>
 
 
-        self.assertFalse(letterpress.settings.SPATIALITE_LIBRARY_PATH.endswith(&#x27;.so&#x27;),
 
-                         &quot;On Windows, SPATIALITE_LIBRARY_PATH should not end with &#x27;.so&#x27;&quot;)
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">letterpress</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">GDAL_LIBRARY_PATH</span> <span class="o">==</span> <span class="kc">None</span><span class="p">,</span>
 
-
-
-        self.assertFalse(letterpress.settings.GDAL_LIBRARY_PATH == None,
-
-                         &#x27;On Windows, GDAL_LIBRARY_PATH should be set&#x27;)
-
+                         <span class="s1">&#39;On Windows, GDAL_LIBRARY_PATH should be set&#39;</span><span class="p">)</span>
+</code></pre></div>
   </pre>
 </div>
     

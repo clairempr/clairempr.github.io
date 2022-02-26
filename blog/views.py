@@ -1,5 +1,5 @@
 import glob
-from markdown import Markdown
+import markdown
 import os
 import re
 import shutil
@@ -60,10 +60,11 @@ class GenerateBlogView(TemplateView):
         if exists(path_to_file):
             os.remove(path_to_file)
 
-        # Stylesheet
-        path_to_file = settings.OUTPUT_DIR / 'style.css'
-        if exists(path_to_file):
-            os.remove(path_to_file)
+        # Stylesheets
+        for stylesheet in ['style.css', 'codehilite.css']:
+            path_to_file = settings.OUTPUT_DIR / stylesheet
+            if exists(path_to_file):
+                os.remove(path_to_file)
 
         # Pages
         for file in os.listdir(settings.OUTPUT_PAGES_DIR):
@@ -72,7 +73,6 @@ class GenerateBlogView(TemplateView):
         # Images
         for file in os.listdir(settings.OUTPUT_IMAGES_DIR):
             os.remove(settings.OUTPUT_IMAGES_DIR / file)
-
 
     def copy_static_files(self):
         """
@@ -257,8 +257,11 @@ def render_blockquote(element_content):
 
 
 def render_code(element_content):
+    # Code block might contain language name for syntax highlighting,
+    # so convert it to html with markdown package
+    code = markdown.markdown(element_content, extensions=['fenced_code', 'codehilite'])
     html = render_to_string('blog/blog_to_generate/partials/code_block.html',
-                            context={'code_block': element_content})
+                            context={'code_block': format_html(code)})
     return html
 
 
@@ -285,11 +288,8 @@ def render_lead_paragraph(element_content):
     # Paragraph might contain links or other inline markdown elements,
     # so convert it to html with markdown package, but strip off outer paragraph tags
     # because they'll show up as text
-    md = Markdown()
-
     first_word = element_content.split(' ')[0]
-    rest_of_paragraph = md.convert(element_content.lstrip(first_word)).lstrip('<p>').rstrip('</p>')
-    print(rest_of_paragraph)
+    rest_of_paragraph = markdown.markdown(element_content.lstrip(first_word)).lstrip('<p>').rstrip('</p>')
     html = render_to_string('blog/blog_to_generate/partials/lead_paragraph.html',
                             context={'first_letter': first_word[0],
                                      'rest_of_first_word': first_word[1:],
@@ -301,10 +301,9 @@ def render_paragraph(element_content):
     # Paragraph might contain links or other inline markdown elements,
     # so convert it to html with markdown package, but strip off outer paragraph tags
     # because they'll show up as text
-    md = Markdown()
-
+    paragraph = markdown.markdown(element_content)
     html = render_to_string('blog/blog_to_generate/partials/paragraph.html',
-                            context={'paragraph': format_html(md.convert(element_content))})
+                            context={'paragraph': format_html(paragraph)})
     return html
 
 

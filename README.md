@@ -5,9 +5,11 @@
 ### Uses custom Markdown to generate html "story" pages
 
 - `# `: Story Title
-- `**`: Story title on main blog page`**`
 - `## `: Posted `date`  
+- `### `: References header (will always be "References")
+- `####`: Story title on main blog page`**`
 - `> `: Blockquote  
+- '```': Code block,
 - Images use modified markdown to allow for setting width  
 `![Alt text](https://path/to/image.jpg width="500" 'Image caption')`  
 - `### `: References header (will always be "References")  

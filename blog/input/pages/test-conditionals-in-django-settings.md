@@ -6,8 +6,7 @@
 
 I have an old Django project where I'm working on achieving 100% unit test coverage to prepare for a major overhaul, so I find myself writing unit tests for the sorts of things that Django developers might not normally get around to. Recently I was struggling to test a situation in my Django settings file where I have GeoDjango-related settings that are different for Windows than they are for Linux. I run the application under Docker myself, so it's always Linux, but I wanted to leave these settings intact for now. 
 
-```
-
+```python
 # Where to find SpatiaLite and GDAL libraries, necessary to support geodatabase stuff in SQLite
 if platform.system() == 'Windows':
     # For Windows, use the following setting. Get mod_spatialite from http://www.gaia-gis.it/gaia-sins/
@@ -46,8 +45,7 @@ Clearly that wasn't the way to go. After a lot of trial and error and taking ano
 
 Here's the finished product, using `patch` to switch between Linux and Windows:
  
-```
-
+```python
 import importlib
 
 from unittest.mock import patch
@@ -58,7 +56,6 @@ from django.test import SimpleTestCase
 # Normally Django settings should be imported as "from django.conf import settings"
 # but here we need to import our settings module explicitly so we can manually reload it
 import letterpress.settings
-
 
 class TestGeoDjangoSettingsTestCase(SimpleTestCase):
     """
