@@ -134,10 +134,11 @@ class GenerateBlogView(TemplateView):
         Generate a story page using elements from the markdown file to fill the template
         """
 
-        context = {'local_blog': self.local_blog}
-
-        context['story_title'] = markdown_elements['story_title']
-        context['posted'] = markdown_elements['posted']
+        context = {'local_blog': self.local_blog,
+                   'staticman_url': settings.STATICMAN_URL,
+                   'story_title': markdown_elements['story_title'],
+                   'posted': markdown_elements['posted'],
+                   }
 
         if 'story_content' in markdown_elements:
             context['story_content'] = render_story_content(markdown_elements['story_content'])

@@ -141,3 +141,6 @@ OUTPUT_PAGES_DIR = OUTPUT_DIR / 'pages'
 
 INPUT_IMAGES_DIR = INPUT_DIR / 'images'
 OUTPUT_IMAGES_DIR = OUTPUT_DIR / 'images'
+
+# Staticman comments configuration
+STATICMAN_URL = 'https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments'

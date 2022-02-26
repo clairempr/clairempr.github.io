@@ -55,4 +55,7 @@
     {% endif %}
 
   </article>
+  {% if staticman_url %}
+    {% include "blog/blog_to_generate/partials/comments.html" %}
+  {% endif %}
 {% endblock main %}
