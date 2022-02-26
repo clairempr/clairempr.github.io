@@ -290,6 +290,15 @@ def render_lead_paragraph(element_content):
     # because they'll show up as text
     first_word = element_content.split(' ')[0]
     rest_of_paragraph = markdown.markdown(element_content.lstrip(first_word)).lstrip('<p>').rstrip('</p>')
+
+    # There's a weird bug where if the first letter of the rest of the paragraph is "p",
+    # then it gets cut off. This also happens when the markdown isn't converted into html.
+    #
+    # Hopefully this is just a temporary hack
+    first_letter_rest_of_paragraph = element_content.lstrip(first_word)[1]
+    if first_letter_rest_of_paragraph != rest_of_paragraph[0]:
+        rest_of_paragraph = '{}{}'.format(first_letter_rest_of_paragraph, rest_of_paragraph)
+
     html = render_to_string('blog/blog_to_generate/partials/lead_paragraph.html',
                             context={'first_letter': first_word[0],
                                      'rest_of_first_word': first_word[1:],

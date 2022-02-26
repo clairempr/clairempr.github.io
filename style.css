@@ -120,6 +120,7 @@ p {
   font-size: 2rem;
   position: relative;
   bottom: -0.04rem;
+  padding-right: 0.5rem;
 }
 
 .home-image {
