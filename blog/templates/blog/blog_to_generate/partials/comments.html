@@ -4,7 +4,7 @@
   <form method="POST" action="{{ staticman_url }}" class="w-50 text-start">
     <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/">
     <!-- e.g. "2016-01-02-this-is-a-post" -->
-    <input class="form-control" name="options[slug]" type="hidden" value="{{ page.slug }}">
+    <input name="options[slug]" type="hidden" value="{{ story_title|slugify }}">
 
     <label for="fields[name]" class="form-label my-2">Name</label>
     <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2">
