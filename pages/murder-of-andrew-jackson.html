@@ -180,42 +180,28 @@
 <div class="comments mt-5 mx-4">
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
 
-  function getComment(fileUrl) {
-    try {
-      $.get(fileUrl, function (response) {
-
-        if (!response) {
-          throw new Error(`Error! status: ${response.status}`);
-        }
-
-        if (response) {
-          const comment = JSON.parse(response);
-          const id = comment._id;
-          const name = comment.name;
-          const message = comment.message;
-          const dateStr = comment.date;
-
-          // Append comment div
-          let commentId = 'comment_' + id;
-          $(".comments").append('<div id="' + commentId + '" class="comment"></div>');
-
-          // Append comment contents
-          let commentDiv = $("#" + commentId);
-          let nameElement = '<p class="comment-name">' + name + "</p>";
-          // Convert date to more readable format
-          const date = new Date(dateStr);
-          let dateElement = '<p class="comment-date">' + date + "</p>";
-          let messageElement = '<p class="comment-message">' + message + "</p>";
-          commentDiv.append(nameElement, dateElement, messageElement);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   $(function () {
     /*
@@ -227,10 +213,45 @@
 
       if (filesList) {
         const lines = filesList.split(/\r\n|\n/);
+
+        let prevCommentDiv = "";
+
         for (let i = 0; i < lines.length - 1; i++) {
 
           const FileUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/the-murder-of-andrew-jackson/" + lines[i];
-          getComment(FileUrl);
+
+          let comment = "";
+          $.get(FileUrl, function(data){
+          comment = JSON.parse(data);
+
+          const id = comment._id;
+          const name = comment.name;
+          const message = comment.message;
+          const dateStr = comment.date;
+
+          // Append comment div
+          let commentId = 'comment_' + id;
+
+          if (prevCommentDiv === "") {
+            $(".comments").append('<div id="' + commentId + '" class="comment"></div>');
+          }
+          else {
+            prevCommentDiv.after('<div id="' + commentId + '" class="comment"></div>');
+          }
+
+          // Append comment contents
+          let commentDiv = $("#" + commentId);
+          let nameElement = '<p class="comment-name">' + name + "</p>";
+          // Convert date to more readable format
+          const date = new Date(dateStr);
+          let dateElement = '<p class="comment-date">' + date + "</p>";
+          let messageElement = '<p class="comment-message">' + message + "</p>";
+          commentDiv.append(nameElement, dateElement, messageElement);
+
+          prevCommentDiv = commentDiv;
+          });
+
+
         }
       }
 
