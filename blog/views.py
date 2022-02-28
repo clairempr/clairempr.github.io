@@ -138,10 +138,6 @@ class GenerateBlogView(TemplateView):
                    'story_title': markdown_elements['story_title'],
                    'posted': markdown_elements['posted'],
                    'html_filename': html_filename,
-                   'staticman_url': settings.STATICMAN_URL,
-                   'comments_url': settings.COMMENTS_URL,
-                   'reCaptcha_site_key': settings.RECAPTCHA_SITE_KEY,
-                   'reCaptcha_secret_key': settings.RECAPTCHA_SECRET_KEY,
                    }
 
         if 'story_content' in markdown_elements:
@@ -149,6 +145,14 @@ class GenerateBlogView(TemplateView):
 
         if 'references' in markdown_elements:
             context['references'] = render_references(markdown_elements['references'])
+
+        # If comments are enabled, add comment-related stuff to context
+        if settings.STATICMAN_URL:
+            context['staticman_url'] = settings.STATICMAN_URL
+            context['comments_url'] = settings.COMMENTS_URL
+            context['comment_file_type'] = settings.COMMENT_FILE_TYPE
+            context['reCaptcha_site_key'] = settings.RECAPTCHA_SITE_KEY
+            context['reCaptcha_secret_key'] = settings.RECAPTCHA_SECRET_KEY
 
         html_string = render_to_string(settings.STORY_TEMPLATE, context)
         html_file_path = settings.OUTPUT_PAGES_DIR / html_filename
