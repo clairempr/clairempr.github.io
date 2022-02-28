@@ -1,7 +1,7 @@
 <div class="mt-5 mx-4">
   <h3 class="pt-3">Comments</h3>
 
-  <form id="comment_form" method="POST" action="{{ staticman_url }}" class="w-50 text-start">
+  <form id="comment_form" method="POST" action="{{ staticman_url }}" class="w-75 text-start">
     <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/pages/{{ html_filename }}">
     <input type="hidden" name="options[reCaptcha][siteKey]" value="{{ reCaptcha_site_key }}">
     <input type="hidden" name="options[reCaptcha][secret]" value="{{ reCaptcha_secret_key }}">
@@ -13,13 +13,14 @@
 
     <label for="fields[message]" class="form-label my-2">Message</label>
     <textarea id="fields[message]" name="fields[message]" class="form-control mb-2" required></textarea>
-    <div id="reCaptcha" class="g-recaptcha" data-sitekey="{{ reCaptcha_site_key }}" data-callback="enableSubmitBtn"></div>
+    <div id="reCaptcha" class="g-recaptcha" data-sitekey="{{ reCaptcha_site_key }}"
+         data-callback="enableSubmitBtn"></div>
     <button id="submit_button" type="submit" class="btn btn-outline-dark my-3 py-2" disabled>Submit</button>
   </form>
 </div>
 
-<div class="comments mt-5 mx-4">
-</div>
+<ul class="list-group list-group-flush comments mt-5 mx-4">
+</ul>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -32,7 +33,7 @@
 
   $(function () {
 
-    $("#comment_form").submit(function(){
+    $("#comment_form").submit(function () {
       alert("Comment submitted!");
     });
 
@@ -46,43 +47,45 @@
       if (filesList) {
         const lines = filesList.split(/\r\n|\n/);
 
-        let prevCommentDiv = "";
+        const commentsElement = $(".comments");
+
+        // Because some of this takes place asynchronously, though the comments are in order
+        // in the text file, they may not be added to the DOM in order, so create a series of
+        // placeholder divs that correspond to lines in the file listing, which is ordered by date/time
+        for (let i = 0; i < lines.length - 1; i++) {
+          commentsElement.append('<div id="' + i + '" class="comment"></div>');
+        }
 
         for (let i = 0; i < lines.length - 1; i++) {
 
-          const FileUrl = "{{comments_url}}{{ story_title|slugify }}/" + lines[i];
+          const fileUrl = "{{comments_url}}{{ story_title|slugify }}/" + lines[i];
 
-          let comment = "";
-          $.get(FileUrl, function(data){
-          comment = JSON.parse(data);
+          $.get(fileUrl, function (data) {
+            let comment = JSON.parse(data);
 
-          const id = comment._id;
-          const name = comment.name;
-          const message = comment.message;
-          const dateStr = comment.date;
+            const id = comment._id;
+            const name = comment.name;
+            const message = comment.message;
+            const dateStr = comment.date.split('.')[0];
 
-          // Append comment div
-          let commentId = 'comment_' + id;
+            // Append comment div
+            let commentId = 'comment_' + id;
 
-          if (prevCommentDiv === "") {
-            $(".comments").append('<div id="' + commentId + '" class="comment"></div>');
-          }
-          else {
-            prevCommentDiv.after('<div id="' + commentId + '" class="comment"></div>');
-          }
+            commentsElement.append('<li id="' + commentId + '" class="list-group-item comment"></li>');
 
-          // Append comment contents
-          let commentDiv = $("#" + commentId);
-          let nameElement = '<p class="comment-name">' + name + "</p>";
-          // Convert date to more readable format
-          const date = new Date(dateStr);
-          let dateElement = '<p class="comment-date">' + date + "</p>";
-          let messageElement = '<p class="comment-message">' + message + "</p>";
-          commentDiv.append(nameElement, dateElement, messageElement);
+            // Append comment contents
+            let commentElement = $("#" + commentId);
+            let nameElement = '<p class="comment-name">' + name + "</p>";
+            // Convert date to more readable format
+            const date = new Date(dateStr);
+            let dateElement = '<p class="comment-date">' + date + "</p>";
+            let messageElement = '<p class="comment-message">' + message + "</p>";
+            commentElement.append(nameElement, dateElement, messageElement);
 
-          prevCommentDiv = commentDiv;
+            // Get the placeholder comment div to replace, to make sure comments are in order
+            const placeholderDiv = $("div#" + i);
+            placeholderDiv.replaceWith(commentElement);
           });
-
 
         }
       }

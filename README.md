@@ -2,6 +2,8 @@
 
 ## quick & dirty blog generator
 
+with an emphasis on **dirty**
+
 ### Uses custom Markdown to generate html "story" pages
 
 - `# `: Story Title
