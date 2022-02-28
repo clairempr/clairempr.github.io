@@ -159,7 +159,7 @@
     <div class="mt-5 mx-4">
   <h3 class="pt-3">Comments</h3>
 
-  <form method="POST" action="https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments" class="w-50 text-start">
+  <form id="comment_form" method="POST" action="https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments" class="w-50 text-start">
     <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/pages/murder-of-andrew-jackson.html">
     <input type="hidden" name="options[reCaptcha][siteKey]" value="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy">
     <input type="hidden" name="options[reCaptcha][secret]" value="jlIrRcrjsIIgtPbTiiI36q2tLFcHQYNP9Z3aDbiqizwx8CIMB8221s/NsAPJmaUr+wz/knWkXrQNNmLpCUXqz6ZBp+S/zZUcUd3A06R8bmIwARyvIu5ah5+8DPb6uw4VoBJtX5qybOG7gBPSEgz19QF9meEcppOj2E9dKQGyviwEWtXTfnRsyVFkxkS8cb8NLhgajbOmMRX9ke4zdshj3/VyF42r0KMTAZZRW4dDKNLc0sdrRzySs187xH01jJh4ChVI3NOvDaPtmRABGAjn7FlTZo+U3Zel9msJynKQitxDhk+xMnNgAW9g539Yg5JpwoxDxuqPNeF8h8SWHwfL8swW8oOsSqFg7z2vE07i78rRqRLRCq2A/OS/JAnUQPBeTUtHp1Uy06FVlGH8LDSAM448hiZlO8hwAeXBBAZnL+7BGUPMA77DfYCsP578nbV3HgyRCwXMxSWBsWIQkGBYh1QW1Grz1nWFEbt1ooMSZDxszP1hzZpqGIExlIOed5N6mk4q9+dSSywaUTEwDCci21Jjsl6NmTKyP+ylCCO0oUBlkLTdkB7MpOKrV38pfYv+zu7uaVlni5rK2Ea/iD7biM4502nJW22XgJy+C2ergq5jQ852vQpFW73MlCM1nhk/qp9/DzehYE/Ufe77XUW120GFHPmAPuZfLy/pEhC+wiM=">
@@ -167,12 +167,11 @@
     <input name="options[slug]" type="hidden" value="the-murder-of-andrew-jackson">
 
     <label for="fields[name]" class="form-label my-2">Name</label>
-    <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2">
+    <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2" required>
 
     <label for="fields[message]" class="form-label my-2">Message</label>
-    <textarea id="fields[message]" name="fields[message]" class="form-control mb-2"></textarea>
+    <textarea id="fields[message]" name="fields[message]" class="form-control mb-2" required></textarea>
     <div id="reCaptcha" class="g-recaptcha" data-sitekey="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy"></div>
-
     <button type="submit" class="btn btn-outline-dark my-3 py-2">Submit</button>
   </form>
 </div>
@@ -182,28 +181,14 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
   $(function () {
+    $("#comment_form").submit(function(){
+      alert("Comment submitted!");
+    });
+
     /*
       Read a list of the comments for this page from the GitHub repo
     */

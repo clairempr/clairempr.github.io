@@ -1,7 +1,7 @@
 <div class="mt-5 mx-4">
   <h3 class="pt-3">Comments</h3>
 
-  <form method="POST" action="{{ staticman_url }}" class="w-50 text-start">
+  <form id="comment_form" method="POST" action="{{ staticman_url }}" class="w-50 text-start">
     <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/pages/{{ html_filename }}">
     <input type="hidden" name="options[reCaptcha][siteKey]" value="{{ reCaptcha_site_key }}">
     <input type="hidden" name="options[reCaptcha][secret]" value="{{ reCaptcha_secret_key }}">
@@ -9,12 +9,11 @@
     <input name="options[slug]" type="hidden" value="{{ story_title|slugify }}">
 
     <label for="fields[name]" class="form-label my-2">Name</label>
-    <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2">
+    <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2" required>
 
     <label for="fields[message]" class="form-label my-2">Message</label>
-    <textarea id="fields[message]" name="fields[message]" class="form-control mb-2"></textarea>
+    <textarea id="fields[message]" name="fields[message]" class="form-control mb-2" required></textarea>
     <div id="reCaptcha" class="g-recaptcha" data-sitekey="{{ reCaptcha_site_key }}"></div>
-
     <button type="submit" class="btn btn-outline-dark my-3 py-2">Submit</button>
   </form>
 </div>
@@ -24,28 +23,14 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
 
-  {#function getComment(fileUrl) {#}
-  {##}
-  {#  $.get(fileUrl, function (response) {#}
-  {##}
-  {#    if (!response) {#}
-  {#      throw new Error(`Error! status: ${response.status}`);#}
-  {#    }#}
-  {##}
-  {#    if (response) {#}
-  {#      alert(response);#}
-  {#      <!--response = response.replaceAll('\"', '"');-->#}
-  {#      <!--const comment = JSON.parse(response);-->#}
-  {#      let comment = response;#}
-  {#      alert(comment);#}
-  {#      return comment;#}
-  {#    }#}
-  {#  });#}
-  {#}#}
-
   $(function () {
+    $("#comment_form").submit(function(){
+      alert("Comment submitted!");
+    });
+
     /*
       Read a list of the comments for this page from the GitHub repo
     */
