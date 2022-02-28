@@ -13,8 +13,8 @@
 
     <label for="fields[message]" class="form-label my-2">Message</label>
     <textarea id="fields[message]" name="fields[message]" class="form-control mb-2" required></textarea>
-    <div id="reCaptcha" class="g-recaptcha" data-sitekey="{{ reCaptcha_site_key }}"></div>
-    <button type="submit" class="btn btn-outline-dark my-3 py-2" disabled>Submit</button>
+    <div id="reCaptcha" class="g-recaptcha" data-sitekey="{{ reCaptcha_site_key }}" data-callback="enableBtn"></div>
+    <button id="submit_button" type="submit" class="btn btn-outline-dark my-3 py-2" disabled>Submit</button>
   </form>
 </div>
 
@@ -25,6 +25,10 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
+
+  function enableBtn(){
+    $("submit_button").disabled = false;
+  }
 
   $(function () {
     $("#comment_form").submit(function(){
