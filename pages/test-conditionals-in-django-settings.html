@@ -310,7 +310,7 @@
     /*
       Read a list of the comments for this page from the GitHub repo
     */
-    const FilesListUrl = "https://raw.githubusercontent.com/clairempr/file-list-action/main/data/comments/testing-conditionals-in-the-django-settings-file/json_files.txt";
+    const FilesListUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/testing-conditionals-in-the-django-settings-file/json_files.txt";
 
     $.get(FilesListUrl, function (filesList) {
 
@@ -318,7 +318,7 @@
         const lines = filesList.split(/\r\n|\n/);
         for (let i = 0; i < lines.length - 1; i++) {
 
-          const FileUrl = "https://raw.githubusercontent.com/clairempr/file-list-action/main/data/comments/testing-conditionals-in-the-django-settings-file/" + lines[i];
+          const FileUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/testing-conditionals-in-the-django-settings-file/" + lines[i];
           getComment(FileUrl);
         }
       }

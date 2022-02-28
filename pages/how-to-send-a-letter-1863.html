@@ -148,7 +148,7 @@
     /*
       Read a list of the comments for this page from the GitHub repo
     */
-    const FilesListUrl = "https://raw.githubusercontent.com/clairempr/file-list-action/main/data/comments/how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863/json_files.txt";
+    const FilesListUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863/json_files.txt";
 
     $.get(FilesListUrl, function (filesList) {
 
@@ -156,7 +156,7 @@
         const lines = filesList.split(/\r\n|\n/);
         for (let i = 0; i < lines.length - 1; i++) {
 
-          const FileUrl = "https://raw.githubusercontent.com/clairempr/file-list-action/main/data/comments/how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863/" + lines[i];
+          const FileUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863/" + lines[i];
           getComment(FileUrl);
         }
       }
