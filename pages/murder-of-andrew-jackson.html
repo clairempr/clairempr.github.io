@@ -156,6 +156,100 @@
 
   </article>
   
+    <div class="mt-5 mx-4">
+  <h3 class="pt-3">Comments</h3>
+
+  <form id="comment_form" method="POST" action="https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments" class="w-50 text-start">
+    <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/pages/murder-of-andrew-jackson.html">
+    <input type="hidden" name="options[reCaptcha][siteKey]" value="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy">
+    <input type="hidden" name="options[reCaptcha][secret]" value="jlIrRcrjsIIgtPbTiiI36q2tLFcHQYNP9Z3aDbiqizwx8CIMB8221s/NsAPJmaUr+wz/knWkXrQNNmLpCUXqz6ZBp+S/zZUcUd3A06R8bmIwARyvIu5ah5+8DPb6uw4VoBJtX5qybOG7gBPSEgz19QF9meEcppOj2E9dKQGyviwEWtXTfnRsyVFkxkS8cb8NLhgajbOmMRX9ke4zdshj3/VyF42r0KMTAZZRW4dDKNLc0sdrRzySs187xH01jJh4ChVI3NOvDaPtmRABGAjn7FlTZo+U3Zel9msJynKQitxDhk+xMnNgAW9g539Yg5JpwoxDxuqPNeF8h8SWHwfL8swW8oOsSqFg7z2vE07i78rRqRLRCq2A/OS/JAnUQPBeTUtHp1Uy06FVlGH8LDSAM448hiZlO8hwAeXBBAZnL+7BGUPMA77DfYCsP578nbV3HgyRCwXMxSWBsWIQkGBYh1QW1Grz1nWFEbt1ooMSZDxszP1hzZpqGIExlIOed5N6mk4q9+dSSywaUTEwDCci21Jjsl6NmTKyP+ylCCO0oUBlkLTdkB7MpOKrV38pfYv+zu7uaVlni5rK2Ea/iD7biM4502nJW22XgJy+C2ergq5jQ852vQpFW73MlCM1nhk/qp9/DzehYE/Ufe77XUW120GFHPmAPuZfLy/pEhC+wiM=">
+    <!-- e.g. "2016-01-02-this-is-a-post" -->
+    <input name="options[slug]" type="hidden" value="the-murder-of-andrew-jackson">
+
+    <label for="fields[name]" class="form-label my-2">Name</label>
+    <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2" required>
+
+    <label for="fields[message]" class="form-label my-2">Message</label>
+    <textarea id="fields[message]" name="fields[message]" class="form-control mb-2" required></textarea>
+    <div id="reCaptcha" class="g-recaptcha" data-sitekey="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy" data-callback="enableBtn"></div>
+    <button id="submit_button" type="submit" class="btn btn-outline-dark my-3 py-2" disabled>Submit</button>
+  </form>
+</div>
+
+<div class="comments mt-5 mx-4">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+
+  $(function () {
+
+    function enableBtn(){
+      $("submit_button").disabled = false;
+    }
+
+    $("#comment_form").submit(function(){
+      alert("Comment submitted!");
+    });
+
+    /*
+      Read a list of the comments for this page from the GitHub repo
+    */
+    const FilesListUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/the-murder-of-andrew-jackson/json_files.txt";
+
+    $.get(FilesListUrl, function (filesList) {
+
+      if (filesList) {
+        const lines = filesList.split(/\r\n|\n/);
+
+        let prevCommentDiv = "";
+
+        for (let i = 0; i < lines.length - 1; i++) {
+
+          const FileUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/the-murder-of-andrew-jackson/" + lines[i];
+
+          let comment = "";
+          $.get(FileUrl, function(data){
+          comment = JSON.parse(data);
+
+          const id = comment._id;
+          const name = comment.name;
+          const message = comment.message;
+          const dateStr = comment.date;
+
+          // Append comment div
+          let commentId = 'comment_' + id;
+
+          if (prevCommentDiv === "") {
+            $(".comments").append('<div id="' + commentId + '" class="comment"></div>');
+          }
+          else {
+            prevCommentDiv.after('<div id="' + commentId + '" class="comment"></div>');
+          }
+
+          // Append comment contents
+          let commentDiv = $("#" + commentId);
+          let nameElement = '<p class="comment-name">' + name + "</p>";
+          // Convert date to more readable format
+          const date = new Date(dateStr);
+          let dateElement = '<p class="comment-date">' + date + "</p>";
+          let messageElement = '<p class="comment-message">' + message + "</p>";
+          commentDiv.append(nameElement, dateElement, messageElement);
+
+          prevCommentDiv = commentDiv;
+          });
+
+
+        }
+      }
+
+    });
+
+  });
+</script>
+  
 
     </main>
 
