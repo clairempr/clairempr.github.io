@@ -27,13 +27,10 @@
 <script>
 
   function enableSubmitBtn() {
-    alert('Got reCaptcha callback');
     $("#submit_button").prop("disabled", false);
   }
 
   $(function () {
-
-
 
     $("#comment_form").submit(function(){
       alert("Comment submitted!");
