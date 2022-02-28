@@ -273,11 +273,14 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
 
+  function enableBtn(){
+    alert('Got reCaptcha callback');
+    $("submit_button").disabled = false;
+  }
+
   $(function () {
 
-    function enableBtn(){
-      $("submit_button").disabled = false;
-    }
+
 
     $("#comment_form").submit(function(){
       alert("Comment submitted!");
