@@ -135,9 +135,13 @@ class GenerateBlogView(TemplateView):
         """
 
         context = {'local_blog': self.local_blog,
-                   'staticman_url': settings.STATICMAN_URL,
                    'story_title': markdown_elements['story_title'],
                    'posted': markdown_elements['posted'],
+                   'html_filename': html_filename,
+                   'staticman_url': settings.STATICMAN_URL,
+                   'comments_url': settings.COMMENTS_URL,
+                   'reCaptcha_site_key': settings.RECAPTCHA_SITE_KEY,
+                   'reCaptcha_secret_key': settings.RECAPTCHA_SECRET_KEY,
                    }
 
         if 'story_content' in markdown_elements:

@@ -67,6 +67,26 @@ p {
   padding: 1rem 0 0 2.2rem;
 }
 
+.comment {
+  padding: 1rem 0;
+}
+
+.comment-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #193366;
+}
+
+.comment-date {
+  color: #193366;
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+.comment-message {
+  font-size: 1.3rem;
+}
+
 .container {
   position: relative;
   min-height: 100vh;

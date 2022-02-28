@@ -14,8 +14,8 @@
   <link href="https://fonts.googleapis.com/css?family=Ballet|Gentium+Basic" rel="stylesheet"
         type="text/css">
   
-    <link href="https://clairempr.github.io/codehilite.css" rel="stylesheet">
-    <link href="https://clairempr.github.io/style.css" rel="stylesheet">
+    <link href="../codehilite.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
   
 
 
@@ -35,8 +35,8 @@
   <div class="row">
     <span class="col-2">
       
-        <a href="https://clairempr.github.io">
-        <img src="https://clairempr.github.io/images/quick_and_dirty_wordcloud.png" class="img-fluid home-image"
+        <a href="../index.html">
+        <img src="../images/quick_and_dirty_wordcloud.png" class="img-fluid home-image"
              alt="Home">
       
       </a>
@@ -82,6 +82,98 @@
     
 
   </article>
+  
+    <div class="mt-5 mx-4">
+  <h3 class="pt-3">Comments</h3>
+
+  <form method="POST" action="https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments" class="w-50 text-start">
+    <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/pages/how-to-send-a-letter-1863.html">
+    <input type="hidden" name="options[reCaptcha][siteKey]" value="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy">
+    <input type="hidden" name="options[reCaptcha][secret]" value="jlIrRcrjsIIgtPbTiiI36q2tLFcHQYNP9Z3aDbiqizwx8CIMB8221s/NsAPJmaUr+wz/knWkXrQNNmLpCUXqz6ZBp+S/zZUcUd3A06R8bmIwARyvIu5ah5+8DPb6uw4VoBJtX5qybOG7gBPSEgz19QF9meEcppOj2E9dKQGyviwEWtXTfnRsyVFkxkS8cb8NLhgajbOmMRX9ke4zdshj3/VyF42r0KMTAZZRW4dDKNLc0sdrRzySs187xH01jJh4ChVI3NOvDaPtmRABGAjn7FlTZo+U3Zel9msJynKQitxDhk+xMnNgAW9g539Yg5JpwoxDxuqPNeF8h8SWHwfL8swW8oOsSqFg7z2vE07i78rRqRLRCq2A/OS/JAnUQPBeTUtHp1Uy06FVlGH8LDSAM448hiZlO8hwAeXBBAZnL+7BGUPMA77DfYCsP578nbV3HgyRCwXMxSWBsWIQkGBYh1QW1Grz1nWFEbt1ooMSZDxszP1hzZpqGIExlIOed5N6mk4q9+dSSywaUTEwDCci21Jjsl6NmTKyP+ylCCO0oUBlkLTdkB7MpOKrV38pfYv+zu7uaVlni5rK2Ea/iD7biM4502nJW22XgJy+C2ergq5jQ852vQpFW73MlCM1nhk/qp9/DzehYE/Ufe77XUW120GFHPmAPuZfLy/pEhC+wiM=">
+    <!-- e.g. "2016-01-02-this-is-a-post" -->
+    <input name="options[slug]" type="hidden" value="how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863">
+
+    <label for="fields[name]" class="form-label my-2">Name</label>
+    <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2">
+
+    <label for="fields[message]" class="form-label my-2">Message</label>
+    <textarea id="fields[message]" name="fields[message]" class="form-control mb-2"></textarea>
+    <div id="reCaptcha" class="g-recaptcha" data-sitekey="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy"></div>
+
+    <button type="submit" class="btn btn-outline-dark my-3 py-2">Submit</button>
+  </form>
+</div>
+
+<div class="comments mt-5 mx-4">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+
+  function getComment(fileUrl) {
+    $.get(fileUrl, function (comment) {
+
+      if (comment) {
+        let id, name, email, message, dateStr = '';
+
+        const lines = comment.split(/\r\n|\n/);
+        for (let i = 0; i < lines.length - 1; i++) {
+
+          let line = lines[i];
+          if (line.startsWith('_id: ')) {
+            id = line.replace('_id: ', '');
+          }
+          else if (line.startsWith('name: ')) {
+            name = line.replace('name: ', '');
+          }
+          else if (line.startsWith('email: ')) {
+            email = line.replace('email: ', '');
+          }
+          else if (line.startsWith('message: ')) {
+            message = line.replace('message: ', '');
+          }
+          else if (line.startsWith('date: ')) {
+            dateStr = line.replace("date: ", "");
+            dateStr = dateStr.replaceAll("'", "");
+          }
+        }
+
+        // Append comment div
+        let commentId = 'comment_' + id;
+        $(".comments").append('<div id="' + commentId + '" class="comment"></div>');
+
+        // Append comment contents
+        let commentDiv = $("#" + commentId);
+        let nameElement = '<p class="comment-name">' + name + "</p>";
+        const date = new Date(dateStr);
+        let dateElement = '<p class="comment-date">' + date + "</p>";
+        let messageElement = '<p class="comment-message">' + message + "</p>";
+        commentDiv.append(nameElement, dateElement, messageElement);
+      }
+    });
+  }
+
+  $(function () {
+    /*
+      Read a list of the comments for this page from the GitHub repo
+    */
+    const ymlFilesListUrl = "https://raw.githubusercontent.com/clairempr/file-list-action/main/data/comments/how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863/yml_files.txt";
+
+    $.get(ymlFilesListUrl, function (filesList) {
+
+      if (filesList) {
+        const lines = filesList.split(/\r\n|\n/);
+        for (let i = 0; i < lines.length - 1; i++) {
+
+          const ymlFileUrl = "https://raw.githubusercontent.com/clairempr/file-list-action/main/data/comments/how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863/" + lines[i];
+          getComment(ymlFileUrl);
+        }
+      }
+
+    });
+
+  });
+</script>
   
 
     </main>
