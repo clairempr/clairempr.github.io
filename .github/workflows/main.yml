@@ -1,0 +1,59 @@
+name: File list action
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    paths:
+      - '**.json'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.json'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  list-files:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    name: Create lists of json files
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+      - uses: actions/checkout@v2
+
+      # Runs a set of commands using the runners shell
+      - name: Create file lists
+        run: |
+          cd data/comments
+            for OUTPUT in $(ls)
+            do
+              if [[ -d $OUTPUT ]]
+              then
+                cd $OUTPUT
+                ls *.json > "json_files.txt"
+                ls -d $PWD/*.txt
+                cd ..
+              fi
+            done
+      - name: Git status
+        run: git status
+      - name: Git add
+        run: git add .
+      - name: Git commit
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "github-actions"
+          git commit -m "Added testing.txt"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'main'
