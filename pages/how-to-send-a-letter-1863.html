@@ -88,7 +88,7 @@
 
   
     <div class="mt-5 mx-4">
-  <h3 class="pt-3">Comments</h3>
+  <h3>Comments</h3>
 
   <form id="comment_form" method="POST" action="https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments" class="w-75 text-start">
     <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/pages/how-to-send-a-letter-1863.html">
@@ -141,13 +141,16 @@
 
   $(function () {
     $("#comment_form").submit(function (response) {
+      // Don't redirect to JSON-formatted spam error message, as cool as it may be
+      window.location.href = "https://clairempr.github.io/pages/how-to-send-a-letter-1863.html";
       if (response) {
         data = JSON.parse(response);
+        // Was spam detected?
         if (data.errorCode === "IS_SPAM") {
           $("spam_toast").toast("show");
-          window.location.href = "https://clairempr.github.io/pages/how-to-send-a-letter-1863.html";
         }
       }
+    // Let user know a comment was submitted
     $("submitted_toast").toast("show");
     });
 
