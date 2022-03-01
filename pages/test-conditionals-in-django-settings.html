@@ -245,6 +245,9 @@
     
 
   </article>
+
+  <div class="divider">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
   
     <div class="mt-5 mx-4">
   <h3 class="pt-3">Comments</h3>
@@ -304,7 +307,7 @@
         data = JSON.parse(response);
         if (data.errorCode === "IS_SPAM") {
           $("spam_toast").toast("show");
-          return false;
+          window.location.href = "https://clairempr.github.io/pages/test-conditionals-in-django-settings.html";
         }
       }
     $("submitted_toast").toast("show");
