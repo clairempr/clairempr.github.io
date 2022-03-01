@@ -215,7 +215,7 @@
         data = JSON.parse(response);
         if (data.errorCode === "IS_SPAM") {
           $("spam_toast").toast("show");
-          return;
+          return false;
         }
       }
     $("submitted_toast").toast("show");
