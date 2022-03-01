@@ -104,10 +104,19 @@
     <button id="submit_button" type="submit" class="btn btn-outline-dark my-3 py-2" disabled>Submit</button>
   </form>
 
-    <div class="toast align-items-center start-50" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="submitted_toast" class="toast align-items-center start-50" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="d-flex">
         <div class="toast-body">
         Comment submitted for moderation. Thanks!
+       </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+
+      <div id="spam_toast" class="toast align-items-center start-50" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+        Possible spam detected. Comment not submitted.
        </div>
         <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
@@ -128,8 +137,15 @@
   }
 
   $(function () {
-    $("#comment_form").submit(function () {
-    $(".toast").toast("show");
+    $("#comment_form").submit(function (response) {
+      if (response) {
+        data = JSON.parse(response);
+        if (data.errorCode === "IS_SPAM") {
+          $("spam_toast").toast("show");
+          return;
+        }
+      }
+    $("submitted_toast").toast("show");
     });
 
     /*
@@ -155,8 +171,8 @@
 
           const fileUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/how-to-send-a-letter-from-north-carolina-to-pennsylvania-in-1863/" + lines[i];
 
-          $.get(fileUrl, function (data) {
-            let comment = JSON.parse(data);
+          $.get(fileUrl, function (response) {
+            let comment = JSON.parse(response);
 
             const id = comment._id;
             const name = comment.name;
