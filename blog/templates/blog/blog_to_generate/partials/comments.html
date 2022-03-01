@@ -52,12 +52,11 @@
 
   $(function () {
     $("#comment_form").submit(function (response) {
-      // Don't redirect to JSON-formatted spam error message, as cool as it may be
-      window.location.href = "https://clairempr.github.io/pages/{{ html_filename }}";
       if (response) {
         data = JSON.parse(response);
         // Was spam detected?
         if (data.errorCode === "IS_SPAM") {
+          alert("Possible spam detected. Comment not submitted.");
           $("spam_toast").toast("show");
         }
       }
