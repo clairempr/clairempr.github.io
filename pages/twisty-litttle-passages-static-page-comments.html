@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Twisty Little Passages: Comments on a Quick and Dirty Blog</title>
+  
+  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
+  <link href="https://fonts.googleapis.com/css?family=Ballet|Gentium+Basic" rel="stylesheet"
+        type="text/css">
+  
+    <link href="https://clairempr.github.io/codehilite.css" rel="stylesheet">
+    <link href="https://clairempr.github.io/style.css" rel="stylesheet">
+  
+
+
+  <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
+  <!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<div class="container">
+  <div class="content-wrap">
+
+    <header>
+      
+  <div class="row">
+    <span class="col-2">
+      
+        <a href="https://clairempr.github.io">
+        <img src="https://clairempr.github.io/images/quick_and_dirty_wordcloud.png" class="img-fluid home-image"
+             alt="Home">
+      
+      </a>
+    </span>
+    <h1 class="col-8 story-title">Twisty Little Passages: Comments on a Quick and Dirty Blog</h1>
+    <span class="col-2"></span>
+  </div>
+
+    </header>
+
+    <main>
+      
+  <article>
+
+    <p class="posted pb-3">Posted Mar. 02, 2022</p>
+
+    <div class="divider">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+    
+      <div class="row d-flex justify-content-center flex-nowrap">
+  <p class="quote">
+    <span class="large-quotation-mark start-quote">
+      &#8220;</span>&nbsp;<span class="px-2">You are in a maze of twisty little passages</span>&nbsp;<sub class="large-quotation-mark end-quote">&#8221;
+    </sub>
+  </p>
+</div>
+    
+      <p class="lead lead-paragraph">
+  <span class="first-letter">W</span>
+  <span class="first-word">hen</span>I wanted to add comments to this blog, which consists of static pages, I considered and rejected commenting systems that cost money and those that require users to have a GitHub account, as the content of my posts is as much about American history as it is about technical topics. I settled on <a href="https://staticman.net/">Staticman</a>, which is free, and has been used successfuly on other GitHub pages. Staticman is free, and it supports reCaptcha, spam filtering with Akismet, moderation, and email notifications from providers that all have a free tier. It's also open source. Comments can be left anonymously if that's what you want, and the data is stored in your GitHub repo, so you have complete control over it.
+</p>
+    
+      <p>This control over the comment data is what ultimately allowed me to get it working on my site, albeit in an extremely convoluted and kind of embarrassing way. At the risk of looking silly, I'm going to explain the process that I came up with.</p>
+    
+      <p>First, a little background on how this blog was built. There are tools for generating GitHub pages from markdown using static site generators like Jekyll, but I wanted to have complete control over the blog's appearance, for better or worse. My initial and totally non-scalable method was simply to write the html and use stylesheets as much as possible to make it easier to change the blog's apperance if I needed to. I quickly gave up on this idea after writing my first couple of stories and created a not actually so quick, but definitely dirty Django application to make use of Django's templating engine to generate pages from a very limited subset of Markdown. A lot of elements were repurposed to serve my specific needs.</p>
+    
+      <p>The significance of this method is that the build takes place locally on my machine, and I just push the generated pages, stylesheets, and images to my GitHub repo, unlike Jekyll, which runs a build on GitHub. This site is truly static.</p>
+    
+      <p>I found this Average Linux User page <a href="https://averagelinuxuser.com/staticman-comments/">Staticman: Add Comments to your Static Website for FREE</a> extremely helpful. I followed the various steps described: creating a bot account on GitHub to submit pull requests with a comment to the blog repo, setting up my own Staticman deployment on Heroku, and adding the main Staticman configuration file <code>staticman.yml</code> to my blog repo.</p>
+    
+      <p>After that I strayed from the path, because I was using Django locally instead of Jekyll on GitHub. I added the Staticman url to Django <code>settings.py</code> instead of <code>_config.yml</code>. The <code>comments.html</code> partial was included in the blog post template. Staticman comments are pushed to <code>"data/comments/&lt;slug&gt;"</code> in my repo, where <code>slug</code> is the slugified title of the given blog post page. Comment files can be either yml or json and are named using a combination of datetime and poster name by default.</p>
+    
+      <p>Existing comments would need to be loaded with JavaScript to be displayed. You can read a file from a url with Javascript if you know the url, but you can't list the contents of remote directories from the client side. How was I going to read the individual comment files if I didn't know their names? There had to be a way.</p>
+    
+      <p>I realized that if I had a file with a known url containing a list of comment filenames, I would know the urls of the individual comments and could read them that way. GitHub pages use a <a href="https://docs.github.com/en/actions">GitHub Action</a> to actually publish pages to github.io, and I knew that Actions could supposedly be used for all sorts of things, so I decided to try creating one that made lists of all the comment files in each blog post directory.</p>
+    
+      <p>I'd never used GitHub Actions before, so making my own was tricky. I tried doing it with JavaScript but got hung up on getting all the moving parts to move. However, one of the parts was a workflow which could be used on its own. In the end I made a GitHub workflow that used bash to traverse the comment directories and redirect the lising output to files. I set up the workflow to be triggered every time a json file was pushed to my blog repo and used Javascript on the blog page to read the list of comment files for that page, if any, and then read each json comment file to load the comment.</p>
+    
+      <p>It wasn't pretty, the process of getting a new comment to display on the page is relatively slow, and my Javascript won't hold up to close scrutiny, but it seems to work. I show a Bootstrap toast with the message that the comment has been submitted for moderation to explain the delay. It's not true, of course. I chose not to go the moderation route because it sounded like too much hassle. Comments just get pushed to main. Hold my beer.</p>
+    
+      <p>The main thing I'm not happy with, aside from my ugly Javascript and the delay in displaying new comments, is the fact that I could not for the life of me figure out how to prevent the redirect to the Akismet "spam detected" message when you post something about a certain medication. I appreciate a good json error message in a web application as much as the next person, but it looks sloppy.</p>
+    
+      <figure class="figure">
+  <img src="https://clairempr.github.io/images/akismet_spam_error.png" class="figure-img img-fluid" width="500" alt='Spam error'>
+  <figcaption class="figure-caption">Akismet spam error message</figcaption>
+</figure>
+    
+      <p>So there you have it, unless I've forgotten a step already. Getting comments onto this quick and dirty blog page involved a journey along some really twisty little passages, and if anyone has a more elegant solution, I'd be glad to hear it.</p>
+    
+      <p>as</p>
+    
+
+    
+      <h3 class="references-header">References</h3>
+      <ul class="references-list">
+        
+          <li><a href="https://staticman.net/">Staticman</a></li>
+        
+          <li><a href="https://averagelinuxuser.com/staticman-comments/">Average Linux User: Staticman: Add Comments to your Static Website for FREE</a></li>
+        
+          <li>"maze of twisty little passages" quote from <a href="https://en.wikipedia.org/wiki/Colossal_Cave_Adventure">Colossal Cave Adventure (also known as Adventure or ADVENT)</a></li>
+        
+      </ul>
+    
+
+  </article>
+
+  <div class="divider">&#10086;&nbsp;&#10086;&nbsp;&#10086;</div>
+
+  
+    <div class="mt-5 mx-4">
+  <h3>Comments</h3>
+
+  <form id="comment_form" method="POST" action="https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments" class="w-75 text-start">
+    <input name="options[redirect]" type="hidden" value="https://clairempr.github.io/pages/twisty-litttle-passages-static-page-comments.html">
+    <input type="hidden" name="options[reCaptcha][siteKey]" value="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy">
+    <input type="hidden" name="options[reCaptcha][secret]" value="jlIrRcrjsIIgtPbTiiI36q2tLFcHQYNP9Z3aDbiqizwx8CIMB8221s/NsAPJmaUr+wz/knWkXrQNNmLpCUXqz6ZBp+S/zZUcUd3A06R8bmIwARyvIu5ah5+8DPb6uw4VoBJtX5qybOG7gBPSEgz19QF9meEcppOj2E9dKQGyviwEWtXTfnRsyVFkxkS8cb8NLhgajbOmMRX9ke4zdshj3/VyF42r0KMTAZZRW4dDKNLc0sdrRzySs187xH01jJh4ChVI3NOvDaPtmRABGAjn7FlTZo+U3Zel9msJynKQitxDhk+xMnNgAW9g539Yg5JpwoxDxuqPNeF8h8SWHwfL8swW8oOsSqFg7z2vE07i78rRqRLRCq2A/OS/JAnUQPBeTUtHp1Uy06FVlGH8LDSAM448hiZlO8hwAeXBBAZnL+7BGUPMA77DfYCsP578nbV3HgyRCwXMxSWBsWIQkGBYh1QW1Grz1nWFEbt1ooMSZDxszP1hzZpqGIExlIOed5N6mk4q9+dSSywaUTEwDCci21Jjsl6NmTKyP+ylCCO0oUBlkLTdkB7MpOKrV38pfYv+zu7uaVlni5rK2Ea/iD7biM4502nJW22XgJy+C2ergq5jQ852vQpFW73MlCM1nhk/qp9/DzehYE/Ufe77XUW120GFHPmAPuZfLy/pEhC+wiM=">
+    <!-- e.g. "2016-01-02-this-is-a-post" -->
+    <input name="options[slug]" type="hidden" value="twisty-little-passages-comments-on-a-quick-and-dirty-blog">
+
+    <label for="fields[name]" class="form-label my-2">Name</label>
+    <input id="fields[name]" name="fields[name]" type="text" class="form-control mb-2" required>
+
+    <label for="fields[message]" class="form-label my-2">Message</label>
+    <textarea id="fields[message]" name="fields[message]" class="form-control mb-2" required></textarea>
+    <div id="reCaptcha" class="g-recaptcha" data-sitekey="6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy"
+         data-callback="enableSubmitBtn"></div>
+    <button id="submit_button" type="submit" class="btn btn-outline-dark my-3 py-2" disabled>Submit</button>
+  </form>
+
+    <div id="submitted_toast" class="toast align-items-center start-50" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+        Comment submitted for moderation. Thanks!
+       </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+
+      <div id="spam_toast" class="toast align-items-center start-50" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+        Possible spam detected. Comment not submitted.
+       </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+
+</div>
+
+<ul class="list-group list-group-flush comments mt-5 mx-4">
+</ul>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+
+  function enableSubmitBtn() {
+    $("#submit_button").prop("disabled", false);
+  }
+
+  $(function () {
+    $("#comment_form").submit(function (response) {
+      if (response) {
+        data = JSON.parse(response);
+        // Was spam detected?
+        if (data.errorCode === "IS_SPAM") {
+          alert("Possible spam detected. Comment not submitted.");
+          $("spam_toast").toast("show");
+        }
+      }
+    // Let user know a comment was submitted
+    $("submitted_toast").toast("show");
+    });
+
+    /*
+      Read a list of the comments for this page from the GitHub repo
+    */
+    const FilesListUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/twisty-little-passages-comments-on-a-quick-and-dirty-blog/json_files.txt";
+
+    $.get(FilesListUrl, function (filesList) {
+
+      if (filesList) {
+        const lines = filesList.split(/\r\n|\n/);
+
+        const commentsElement = $(".comments");
+
+        // Because some of this takes place asynchronously, though the comments are in order
+        // in the text file, they may not be added to the DOM in order, so create a series of
+        // placeholder divs that correspond to lines in the file listing, which is ordered by date/time
+        for (let i = 0; i < lines.length - 1; i++) {
+          commentsElement.append('<div id="' + i + '" class="comment"></div>');
+        }
+
+        for (let i = 0; i < lines.length - 1; i++) {
+
+          const fileUrl = "https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/twisty-little-passages-comments-on-a-quick-and-dirty-blog/" + lines[i];
+
+          $.get(fileUrl, function (response) {
+            let comment = JSON.parse(response);
+
+            const id = comment._id;
+            const name = comment.name;
+            const message = comment.message;
+            const dateStr = comment.date.split('.')[0];
+
+            // Append comment div
+            let commentId = 'comment_' + id;
+
+            commentsElement.append('<li id="' + commentId + '" class="list-group-item comment"></li>');
+
+            // Append comment contents
+            let commentElement = $("#" + commentId);
+            let nameElement = '<p class="comment-name">' + name + "</p>";
+            // Convert date to more readable format
+            const date = new Date(dateStr);
+            let dateElement = '<p class="comment-date">' + date + "</p>";
+            let messageElement = '<p class="comment-message">' + message + "</p>";
+            commentElement.append(nameElement, dateElement, messageElement);
+
+            // Get the placeholder comment div to replace, to make sure comments are in order
+            const placeholderDiv = $("div#" + i);
+            placeholderDiv.replaceWith(commentElement);
+          });
+
+        }
+      }
+
+    });
+
+  });
+</script>
+  
+
+    </main>
+
+    <footer>
+      <span>© 2022 Claire Pritchard</span>
+    </footer>
+
+  </div>
+</div>
+
+</body>
+
+</html>

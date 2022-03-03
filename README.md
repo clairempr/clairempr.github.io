@@ -1,4 +1,4 @@
-# clairempr.github.io
+# https://clairempr.github.io
 
 ## quick & dirty blog generator
 
