@@ -26,12 +26,13 @@ I'd never used GitHub Actions before, so making my own was tricky. I tried doing
 
 It wasn't pretty, the process of getting a new comment to display on the page is relatively slow, and my Javascript won't hold up to close scrutiny, but it seems to work. I show a Bootstrap toast with the message that the comment has been submitted for moderation to explain the delay. It's not true, of course. I chose not to go the moderation route because it sounded like too much hassle. Comments just get pushed to main. Hold my beer.  
 
+In summary, the path that comments take is as follows: User write a comment. If it gets past the spam filter, it gets posted to my Staticman instance on Heroku. From there, my GitHub comment bot pushes its json file to the main branch on my blog repo. The GitHub workflow is triggered by the push and creates a new list of comment files for that page. When the page gets loaded again later, the comment file will be read and the contents inserted into the page using Javascript.  
+
 The main thing I'm not happy with, aside from my ugly Javascript and the delay in displaying new comments, is the fact that I could not for the life of me figure out how to prevent the redirect to the Akismet "spam detected" message when you post something about a certain medication. I appreciate a good json error message in a web application as much as the next person, but it looks sloppy.  
 
 ![Spam error](https://clairempr.github.io/images/akismet_spam_error.png width="775" 'Akismet spam error message')
 
 So there you have it, unless I've forgotten a step already. Getting comments onto this quick and dirty blog page involved a journey along some really twisty little passages, and if anyone has a more elegant solution, I'd be glad to hear it.  
-as 
 
 ### References
 - <a href="https://staticman.net/">Staticman</a>
