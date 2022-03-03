@@ -28,7 +28,7 @@ It wasn't pretty, the process of getting a new comment to display on the page is
 
 The main thing I'm not happy with, aside from my ugly Javascript and the delay in displaying new comments, is the fact that I could not for the life of me figure out how to prevent the redirect to the Akismet "spam detected" message when you post something about a certain medication. I appreciate a good json error message in a web application as much as the next person, but it looks sloppy.  
 
-![Spam error](https://clairempr.github.io/images/akismet_spam_error.png width="650" 'Akismet spam error message')
+![Spam error](https://clairempr.github.io/images/akismet_spam_error.png width="690" 'Akismet spam error message')
 
 So there you have it, unless I've forgotten a step already. Getting comments onto this quick and dirty blog page involved a journey along some really twisty little passages, and if anyone has a more elegant solution, I'd be glad to hear it.  
 as 
