@@ -180,7 +180,7 @@ class GenerateLocalBlogView(GenerateBlogView):
     copies of pages and css files
     """
 
-    # Urls for pages and css files in generated pages need to point to local copies,
+    # Urls for pages, images, and css files in generated pages need to point to local copies,
     # not to their locations at github.io
     local_blog = True
 
