@@ -33,7 +33,7 @@ def parse_markdown_file(filename):
 
         line = line.rstrip()
         if line:
-            misc_element = True
+            paragraph = True
 
             for key in markdown_mapping:
 
@@ -41,41 +41,42 @@ def parse_markdown_file(filename):
 
                     if markdown_mapping[key] == 'code':
                         if line.startswith(key):
-                            code_block = []
-                            code_block.append(line)
+                            code_block = [line]
                             line = ''
-
                             while not line.startswith(key):
                                 line = next(markdown)
                                 code_block.append(line)
+                            append_story_content(elements=elements, content_type=markdown_mapping[key],
+                                                 content='\n'.join(code_block))
 
-                            if 'story_content' not in elements:
-                                elements['story_content'] = []
-                            elements['story_content'].append((markdown_mapping[key], '\n'.join(code_block)))
-
-                    elif markdown_mapping[key] in ['story_title', 'date_posted']:
+                    elif markdown_mapping[key] in ['story_title', 'story_list_title', 'date_posted']:
                         elements[markdown_mapping[key]] = line.lstrip(key)
-                    elif markdown_mapping[key] in ['story_list_title']:
-                        elements[markdown_mapping[key]] = line[len(key):]
                     elif markdown_mapping[key] == 'references':
                         elements['references'] = []
                     elif markdown_mapping[key] == 'li' and 'references' in elements:
                         elements['references'].append(line.lstrip(key))
-                    elif markdown_mapping[key] in ['h1', 'h2', 'h3', 'bold', 'italic', 'blockquote', 'image']:
-                        if 'story_content' not in elements:
-                            elements['story_content'] = []
-                        if markdown_mapping[key] in ['h1', 'h2', 'h3', 'bold', 'italic']:
-                            # Don't strip the markdown from elements that can be handled by real formatter
-                            story_content_line = line
-                        else:
-                            story_content_line = line.lstrip(key)
-                        elements['story_content'].append((markdown_mapping[key], story_content_line))
+                    elif markdown_mapping[key] in ['blockquote', 'image']:
+                        append_story_content(elements=elements, content_type=markdown_mapping[key],
+                                             content=line.lstrip(key))
+                    elif markdown_mapping[key] in ['h1', 'h2', 'h3', 'bold', 'italic']:
+                        # Don't strip the markdown from elements that can be handled by real formatter
+                        append_story_content(elements=elements, content_type=markdown_mapping[key],
+                                             content=line)
 
-                    misc_element = False
+                    paragraph = False
 
-            if misc_element:
-                if 'story_content' not in elements:
-                    elements['story_content'] = []
-                elements['story_content'].append(('p', line))
+            if paragraph:
+                append_story_content(elements=elements, content_type='p', content=line)
 
+    return elements
+
+
+def append_story_content(elements, content_type, content):
+    """
+    Append content to story_content list in markdown elements
+    """
+    if 'story_content' not in elements:
+        elements['story_content'] = []
+
+    elements['story_content'].append((content_type, content))
     return elements
