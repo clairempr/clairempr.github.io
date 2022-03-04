@@ -1,8 +1,8 @@
-# The Murder of Andrew Jackson
+_story_title The Murder of Andrew Jackson
 
-#### The murder of Andrew Jackson  
+_story_list_title The murder of Andrew Jackson  
 
-## Posted Feb. 14, 2022
+_date_posted Posted Feb. 14, 2022
 
 > We have had a terrible thing occur here
 
@@ -40,9 +40,9 @@ General Howard held out hope that the perpetrator might still face divine punish
 
 This tragic occurrence made a deep impression on the man who would later become the head of the Freedmen's Bureau and one of the founders of Howard University. Decades later, he would write about it in his autobiography. "Among our enlisted men there were not a few who at one time held views similar to the New York rioters of 1863. They hated a negro except as a slave, and they kept alive in their circle of influence an undercurrent of malice more or less active."
 
-Though some of the details of the event had changed in the intervening years, the essence of the story was the same. "Evidently on account of his color he was slain," Howard wrote. "Friendly voices murmured against the crime, and with set teeth echoed the settled thought: 'Slavery must go.'"
+Though some of the details of the event had changed in his memory in the intervening years, the essence of the story was the same. "Evidently on account of his color he was slain," Howard wrote. "Friendly voices murmured against the crime, and with set teeth echoed the settled thought: 'Slavery must go.'"
 
-### References
+_references References
 - <a href="https://library.bowdoin.edu/arch/mss/oohg.shtml">Oliver Otis Howard Papers, George J. Mitchell Department of Special Collections & Archives, Bowdoin College Library, Brunswick, Maine</a>
 - <a href="https://library.bowdoin.edu/arch/mss/chhg.shtml">Charles Henry Howard Collection, George J. Mitchell Department of Special Collections & Archives, Bowdoin College Library, Brunswick, Maine</a>
 - O.O. Howard, letter to Elizabeth A. Howard, January 4, 1863, OOHP

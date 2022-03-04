@@ -121,8 +121,10 @@ class GenerateBlogView(TemplateView):
 
             self.generate_story_page(markdown_elements=markdown_elements, html_filename=html_filename)
 
-            date_posted = datetime.strptime(markdown_elements['posted'].lstrip('Posted '), '%b. %d, %Y').date()
-            story_elements = (html_filename, markdown_elements['story_list_title'], date_posted)
+            story_list_title = get_story_list_title_from_markdown(markdown_elements)
+            date_posted = datetime.strptime(get_date_posted_from_markdown(markdown_elements).lstrip('Posted '),
+                                            '%b. %d, %Y').date()
+            story_elements = (html_filename, story_list_title, date_posted)
             stories.append(story_elements)
 
         # Sort the list by date posted, in descending order
@@ -135,13 +137,11 @@ class GenerateBlogView(TemplateView):
         """
 
         context = {'local_blog': self.local_blog,
-                   'story_title': markdown_elements['story_title'],
-                   'posted': markdown_elements['posted'],
+                   'story_title': get_story_title_from_markdown(markdown_elements),
+                   'date_posted': get_date_posted_from_markdown(markdown_elements),
+                   'story_content': render_story_content(get_story_content_from_markdown(markdown_elements)),
                    'html_filename': html_filename,
                    }
-
-        if 'story_content' in markdown_elements:
-            context['story_content'] = render_story_content(markdown_elements['story_content'])
 
         if 'references' in markdown_elements:
             context['references'] = render_references(markdown_elements['references'])
@@ -215,8 +215,8 @@ class GeneratedIndexView(TemplateView):
             html_filename = os.path.basename(markdown_file).replace('.md', '.html')
             markdown_elements = parse_markdown_file(markdown_file)
 
-            date_posted = datetime.strptime(markdown_elements['posted'].lstrip('Posted '), '%b. %d, %Y').date()
-            story_elements = (html_filename, markdown_elements['story_list_title'], date_posted)
+            date_posted = datetime.strptime(get_date_posted_from_markdown(markdown_elements).lstrip('Posted '), '%b. %d, %Y').date()
+            story_elements = (html_filename, get_story_list_title_from_markdown(markdown_elements), date_posted)
             stories.append(story_elements)
 
         # Sort the list by date posted, in descending order
@@ -251,12 +251,28 @@ class GeneratedStoryView(TemplateView):
         markdown_file_path = settings.INPUT_PAGES_DIR / self.markdown_file
         markdown_elements = parse_markdown_file(markdown_file_path)
 
-        context['story_title'] = markdown_elements['story_title']
-        context['posted'] = markdown_elements['posted']
-        context['story_content'] = render_story_content(markdown_elements['story_content'])
+        context['story_title'] = get_story_title_from_markdown(markdown_elements)
+        context['date_posted'] = get_date_posted_from_markdown(markdown_elements)
+        context['story_content'] = render_story_content(get_story_content_from_markdown(markdown_elements))
         context['references'] = render_references(markdown_elements['references'])
 
         return context
+
+
+def get_date_posted_from_markdown(markdown_elements):
+    return markdown_elements['date_posted'] if 'date_posted' in markdown_elements else 'Undated'
+
+
+def get_story_title_from_markdown(markdown_elements):
+    return markdown_elements['story_title'] if 'story_title' in markdown_elements else 'Untitled'
+
+
+def get_story_list_title_from_markdown(markdown_elements):
+    return markdown_elements['story_list_title'] if 'story_list_title' in markdown_elements else 'Untitled'
+
+
+def get_story_content_from_markdown(markdown_elements):
+    return markdown_elements['story_content'] if 'story_content' in markdown_elements else ''
 
 
 def render_story_content(elements):
@@ -276,7 +292,11 @@ def render_story_content(elements):
                 html = render_lead_paragraph(element_content)
                 lead_paragraph = False
             else:
+                # This is not necessarily a paragraph - it could be anything not specifically
+                # recognized by this application
                 html = render_paragraph(element_content)
+        elif element_type in ['h1', 'h2', 'h3', 'bold', 'italic']:
+            html = render_misc_element(element_content)
         elif element_type == 'blockquote':
             html = render_blockquote(element_content)
         elif element_type == 'image':
@@ -303,6 +323,13 @@ def render_code(element_content):
     html = render_to_string('blog/blog_to_generate/partials/code_block.html',
                             context={'code_block': format_html(code)})
     return html
+
+
+def render_misc_element(element_content):
+    """
+    Elements that can be handled by real Markdown formatter
+    """
+    return format_html(markdown.markdown(element_content))
 
 
 def render_image(element_content):
@@ -335,9 +362,10 @@ def render_lead_paragraph(element_content):
     # then it gets cut off. This also happens when the markdown isn't converted into html.
     #
     # Hopefully this is just a temporary hack
-    first_letter_rest_of_paragraph = element_content.lstrip(first_word)[1]
-    if first_letter_rest_of_paragraph != rest_of_paragraph[0]:
-        rest_of_paragraph = '{}{}'.format(first_letter_rest_of_paragraph, rest_of_paragraph)
+    if rest_of_paragraph:
+        first_letter_rest_of_paragraph = element_content.lstrip(first_word)[1] if len(first_word) > 1 else ''
+        if first_letter_rest_of_paragraph != rest_of_paragraph[0]:
+            rest_of_paragraph = '{}{}'.format(first_letter_rest_of_paragraph, rest_of_paragraph)
 
     html = render_to_string('blog/blog_to_generate/partials/lead_paragraph.html',
                             context={'first_letter': first_word[0],

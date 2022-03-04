@@ -6,17 +6,20 @@ with an emphasis on **dirty**
 
 ### Uses custom Markdown to generate html "story" pages
 
-- `# `: Story Title
-- `## `: Posted `date`  
-- `### `: References header (will always be "References")
-- `####`: Story title on main blog page`**`
+- `_story_title `: Story Title
+- `_date_posted `: Posted `date`  
+- `_references `: References header (will always be "References")
+- `story_list_title `: Story title on main blog page  
+- `# `: H1  
+- `## `: H2  
+- `### `: H3  
+-`** **`: Bold
 - `> `: Blockquote  
 - '```': Code block,
 - Images use modified markdown to allow for setting width  
 `![Alt text](https://path/to/image.jpg width="500" 'Image caption')`  
-- `### `: References header (will always be "References")  
-- `- `: Reference list item  
-- Anything else will be treated as a paragraph  
+- `- `: Reference list item
+- Anything else will be treated as a paragraph and fed through the real Markdown formatter   
 
 ### To generate blog index page and story pages
 

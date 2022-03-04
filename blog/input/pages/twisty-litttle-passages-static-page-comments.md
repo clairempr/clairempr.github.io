@@ -1,8 +1,8 @@
-# Twisty Little Passages: Comments on a Quick and Dirty Blog
+_story_title Twisty Little Passages: Comments on a Quick and Dirty Blog
 
-#### Twisty little passages: Comments on a quick & dirty blog  
+_story_list_title Twisty little passages: Comments on a quick & dirty blog  
 
-## Posted Mar. 02, 2022
+_date_posted Posted Mar. 02, 2022
 
 > You are in a maze of twisty little passages
 
@@ -34,7 +34,7 @@ The main thing I'm not happy with, aside from my ugly Javascript and the delay i
 
 So there you have it, unless I've forgotten a step already. Getting comments onto this quick and dirty blog page involved a journey along some really twisty little passages, and if anyone has a more elegant solution, I'd be glad to hear it.  
 
-### References
+_references References
 - <a href="https://staticman.net/">Staticman</a>
 - <a href="https://averagelinuxuser.com/staticman-comments/">Average Linux User: Staticman: Add Comments to your Static Website for FREE</a>
 - "maze of twisty little passages" quote from <a href="https://en.wikipedia.org/wiki/Colossal_Cave_Adventure">Colossal Cave Adventure (also known as Adventure or ADVENT)</a> 

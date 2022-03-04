@@ -1,8 +1,8 @@
-# Testing Conditionals in the Django Settings File
+_story_title Testing Conditionals in the Django Settings File
 
-#### Testing conditionals in the Django settings file  
+_story_list_title Testing conditionals in the Django settings file  
 
-## Posted Feb. 25, 2022
+_date_posted Posted Feb. 25, 2022
 
 I have an old Django project where I'm working on achieving 100% unit test coverage to prepare for a major overhaul, so I find myself writing unit tests for the sorts of things that Django developers might not normally get around to. Recently I was struggling to test a situation in my Django settings file where I have GeoDjango-related settings that are different for Windows than they are for Linux. I run the application under Docker myself, so it's always Linux, but I wanted to leave these settings intact for now. 
 
