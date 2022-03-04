@@ -11,6 +11,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView, View
 
 from blog.markdown_utils import parse_markdown_file
@@ -320,8 +321,10 @@ def render_code(element_content):
     # Code block might contain language name for syntax highlighting,
     # so convert it to html with markdown package
     code = markdown.markdown(element_content, extensions=['fenced_code', 'codehilite'])
+    # Use mark_safe() instead of format_html() because paragraph may contain curly braces,
+    # and that will cause an error with format_html()
     html = render_to_string('blog/blog_to_generate/partials/code_block.html',
-                            context={'code_block': format_html(code)})
+                            context={'code_block': mark_safe(code)})
     return html
 
 
@@ -366,11 +369,12 @@ def render_lead_paragraph(element_content):
         first_letter_rest_of_paragraph = element_content.lstrip(first_word)[1] if len(first_word) > 1 else ''
         if first_letter_rest_of_paragraph != rest_of_paragraph[0]:
             rest_of_paragraph = '{}{}'.format(first_letter_rest_of_paragraph, rest_of_paragraph)
-
+    # Use mark_safe() instead of format_html() because paragraph may contain curly braces,
+    # and that will cause an error with format_html()
     html = render_to_string('blog/blog_to_generate/partials/lead_paragraph.html',
                             context={'first_letter': first_word[0],
                                      'rest_of_first_word': first_word[1:],
-                                     'rest_of_paragraph': format_html(rest_of_paragraph)})
+                                     'rest_of_paragraph': mark_safe(rest_of_paragraph)})
     return html
 
 
@@ -379,8 +383,10 @@ def render_paragraph(element_content):
     # so convert it to html with markdown package, but strip off outer paragraph tags
     # because they'll show up as text
     paragraph = markdown.markdown(element_content)
+    # Use mark_safe() instead of format_html() because paragraph may contain curly braces,
+    # and that will cause an error with format_html()
     html = render_to_string('blog/blog_to_generate/partials/paragraph.html',
-                            context={'paragraph': format_html(paragraph)})
+                            context={'paragraph': mark_safe(paragraph)})
     return html
 
 
