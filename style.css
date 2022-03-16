@@ -46,17 +46,18 @@ main {
 }
 
 p {
-  font-size: 1.9rem;
+  font-size: 1.1rem;
   text-align: left;
   text-wrap: normal;
   padding: 0.3rem 0 0.3rem 0;
 }
 
-/* Bootstrap small */
-@media (min-width: 576px) {
-  p {
-  font-size: 1.6rem;
-  }
+@media (min-width: 400px) {
+  p { font-size: calc(1rem + 1vw); }
+}
+
+@media (min-width: 1001px){
+  p { font-size: 1.5rem; }
 }
 
 .code-block {
@@ -112,7 +113,6 @@ p {
 
 .content-wrap {
   padding-bottom: 6.8rem;    /* Footer height */
-  margin: 0 -2.6rem;
 }
 
 .divider {
@@ -126,7 +126,7 @@ p {
 }
 
 .figure-caption {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
 .first-letter {
@@ -165,7 +165,7 @@ p {
 }
 
 .lead-paragraph {
-  font-size: 2.3rem;
+  font-size: 1.5rem;
   line-height: 2.4rem;
   padding: 1.1rem 0 0.9rem 0;
   text-indent: -0.2rem;
