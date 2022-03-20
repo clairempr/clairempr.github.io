@@ -31,6 +31,7 @@ blockquote {
   text-align: left;
   text-wrap: normal;
   padding: 0.3rem;
+  background-color: #f2f2f2;
 }
 
 footer {
@@ -207,8 +208,6 @@ p {
 }
 
 .quote {
-  background-color: #f2f2f2;
-  font-family: 'Gentium Basic', serif;
   font-size: 1.2em;
   line-height: 3rem;
   padding: 1.4rem 2.8rem 1.5rem 2.8rem;

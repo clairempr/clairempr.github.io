@@ -313,17 +313,14 @@ def render_story_content(elements):
 
 
 def render_blockquote(element_content):
-    print(' in render_blockquote')
-    quote = element_content.split('> ')[0]
     html = render_to_string('blog/blog_to_generate/partials/blockquote.html',
-                            context={'quote': quote})
+                            context={'quote': element_content})
     return html
 
 
 def render_large_blockquote(element_content):
-    quote = element_content.split('> ')[0]
     html = render_to_string('blog/blog_to_generate/partials/large_blockquote.html',
-                            context={'quote': quote})
+                            context={'quote': element_content})
     return html
 
 

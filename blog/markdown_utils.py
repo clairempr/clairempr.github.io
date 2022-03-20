@@ -40,15 +40,23 @@ def parse_markdown_file(filename):
 
                 if line.startswith(key):
 
+                    if markdown_mapping[key] in ['blockquote']:
+                        block = []
+                        while line.startswith(key):
+                            block.append(line.lstrip(key))
+                            line = next(markdown)
+                        append_story_content(elements=elements, content_type=markdown_mapping[key],
+                                             content='\n'.join(block))
+                    # No elif here, because reading in the blockquote consumed an extra line in the markdown
                     if markdown_mapping[key] in ['code']:
                         if line.startswith(key):
-                            code_block = [line]
+                            block = [line]
                             line = ''
                             while not line.startswith(key):
                                 line = next(markdown)
-                                code_block.append(line)
+                                block.append(line)
                             append_story_content(elements=elements, content_type=markdown_mapping[key],
-                                                 content='\n'.join(code_block))
+                                                 content='\n'.join(block))
 
                     elif markdown_mapping[key] in ['story_title', 'story_list_title', 'date_posted']:
                         elements[markdown_mapping[key]] = line.lstrip(key)
@@ -56,7 +64,7 @@ def parse_markdown_file(filename):
                         elements['references'] = []
                     elif markdown_mapping[key] == 'li' and 'references' in elements:
                         elements['references'].append(line.lstrip(key))
-                    elif markdown_mapping[key] in ['image', 'blockquote', 'large_blockquote']:
+                    elif markdown_mapping[key] in ['image', 'large_blockquote']:
                         append_story_content(elements=elements, content_type=markdown_mapping[key],
                                              content=line.lstrip(key))
                     elif markdown_mapping[key] in ['h1', 'h2', 'h3', 'bold', 'italic']:
