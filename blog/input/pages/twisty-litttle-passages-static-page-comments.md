@@ -4,7 +4,7 @@ _story_list_title Twisty little passages: Comments on a quick & dirty blog
 
 _date_posted Posted Mar. 02, 2022
 
-> You are in a maze of twisty little passages
+_large_blockquote You are in a maze of twisty little passages
 
 When I wanted to add comments to this blog, which consists of static pages, I considered and rejected commenting systems that cost money and those that require users to have a GitHub account, as the content of my posts is as much about American history as it is about technical topics. I settled on <a href="https://staticman.net/">Staticman</a>, which is free, and has been used successfuly on other GitHub pages. Staticman is free, and it supports <a href="https://www.google.com/recaptcha/about/">reCaptcha</a>, spam filtering with <a href="https://akismet.com/">Akismet</a>, moderation, and email notifications from providers that all have a free tier. It's also open source. Comments can be left anonymously if that's what you want, and the data is stored in your GitHub repo, so you have complete control over it.   
 

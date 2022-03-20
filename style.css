@@ -11,6 +11,22 @@ a:visited {
   color: #002080;
 }
 
+blockquote {
+  font-family: 'Gentium Basic', serif;
+  font-size: 1.1rem;
+  text-align: left;
+  text-wrap: normal;
+  padding: 0.3rem;
+}
+
+@media (min-width: 400px) {
+  blockquote { font-size: calc(1rem + 1vw); }
+}
+
+@media (min-width: 1001px){
+  blockquote { font-size: 1.5rem; }
+}
+
 footer {
   color: #4d4d4d;
   font-size: 1.4rem;

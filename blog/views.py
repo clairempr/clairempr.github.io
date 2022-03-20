@@ -300,6 +300,8 @@ def render_story_content(elements):
             html = render_misc_element(element_content)
         elif element_type == 'blockquote':
             html = render_blockquote(element_content)
+        elif element_type == 'large_blockquote':
+            html = render_large_blockquote(element_content)
         elif element_type == 'image':
             html = render_image(element_content)
         elif element_type == 'code':
@@ -311,8 +313,16 @@ def render_story_content(elements):
 
 
 def render_blockquote(element_content):
+    print(' in render_blockquote')
     quote = element_content.split('> ')[0]
     html = render_to_string('blog/blog_to_generate/partials/blockquote.html',
+                            context={'quote': quote})
+    return html
+
+
+def render_large_blockquote(element_content):
+    quote = element_content.split('> ')[0]
+    html = render_to_string('blog/blog_to_generate/partials/large_blockquote.html',
                             context={'quote': quote})
     return html
 

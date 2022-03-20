@@ -18,6 +18,7 @@ def parse_markdown_file(filename):
         '_date_posted ': 'date_posted',
         '_references ': 'references',
         '_story_list_title ': 'story_list_title',
+        '_large_blockquote ': 'large_blockquote',
         '# ': 'h1',
         '## ': 'h2',
         '### ': 'h3',
@@ -39,7 +40,7 @@ def parse_markdown_file(filename):
 
                 if line.startswith(key):
 
-                    if markdown_mapping[key] == 'code':
+                    if markdown_mapping[key] in ['code']:
                         if line.startswith(key):
                             code_block = [line]
                             line = ''
@@ -55,7 +56,7 @@ def parse_markdown_file(filename):
                         elements['references'] = []
                     elif markdown_mapping[key] == 'li' and 'references' in elements:
                         elements['references'].append(line.lstrip(key))
-                    elif markdown_mapping[key] in ['blockquote', 'image']:
+                    elif markdown_mapping[key] in ['image', 'blockquote', 'large_blockquote']:
                         append_story_content(elements=elements, content_type=markdown_mapping[key],
                                              content=line.lstrip(key))
                     elif markdown_mapping[key] in ['h1', 'h2', 'h3', 'bold', 'italic']:

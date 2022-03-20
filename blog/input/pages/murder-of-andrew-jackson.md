@@ -4,7 +4,7 @@ _story_list_title The murder of Andrew Jackson
 
 _date_posted Posted Feb. 14, 2022
 
-> We have had a terrible thing occur here
+_large_blockquote We have had a terrible thing occur here
 
 In January of 1863, while the Army of the Potomac was encamped for the winter near Falmouth, Virginia, a murder occurred. It is one small, long-forgotten tragedy dwarfed by the larger tragedy of the American Civil War, which nevertheless deserves to be remembered. On January 14th, Brigadier General Oliver Otis Howard, commanding a division in the 2nd Corps, wrote to his wife Lizzie: "We have had a terrible thing occur here, that has cast a shade over our life at Head Quarters."
 
@@ -24,13 +24,13 @@ In an attempt to save the boy's life, doctors removed his arm at the shoulder, a
 
 Despite the doctors' best efforts (or perhaps in part because of them), Andrew died the day after the shooting. Before he died, Charles wrote that "He was also a praying boy and it seems to us all that it will be a great mercy if the Lord shall see fit to take him to Himself at once, sparing him further suffering and an undesirable future in this world." General Howard, having himself lost an arm at Fair Oaks the previous year, would have been all too aware of the difficulties that the boy would face, should he manage to survive. Charles, who was very close to his brother Otis, would have understood as well. For a young, uneducated man of color, it was an undesirable future indeed.
 
-> very much beloved at these Head Quarters
+_large_blockquote very much beloved at these Head Quarters
 
 "The poor boy breathed his last breath of anguish in the night," Charles wrote on January 14, 1863, to their mother. "It is a great relief to our feelings to know that he is at peace with his Saviour whom he told Otis he loved and on whom he was wont to rely. He was remarkable for his piety and unvarying good conduct." The Howard brothers further described Andrew as "a most exemplary boy, remarkable for his good manners and strict integrity of character," "kind and thoughtful at all times," and "very much beloved at these Head Quarters by every-body."
 
 In his diary, Charles described the boy's funeral: "We buried him yesterday P.M. Capt. Whittlesey read a passage & offered prayer - Our servants were there & a few soldiers who assisted at the burial. He was wrapped in his blanket & put by the side of the remains of soldiers who have died in service of their country. Few soldiers are laid in coffins - It seems almost barbarous to our people at home. It seems to me that thus much respect ought to be shown to the dead - to procure some enclosure of wood. But in reality it matters little. The lifeless clay that remains when the soul has departed is of little value."
 
-> The good boys blood is upon them - and God will require it at their hands.
+_large_blockquote The good boys blood is upon them - and God will require it at their hands.
 
 Though the brothers visited General Winfield Scott Hancock in hopes of tracking down the murderer, it was of no use. "The soldier who shot him has not yet been caught," wrote Charles Howard, "- all that is known is that he belongs to the Irish Brigade famous for fighting abroad but here famous for rowdyism & villainy more than anything else." Though it is unclear how it was known that the perpetrator was from the Irish Brigade, prejudice against the Irish was widespread in the United States in those days, and a tale of Irish mischief would be readily believed.
 

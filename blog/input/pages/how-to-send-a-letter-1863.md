@@ -4,7 +4,7 @@ _story_list_title How to send a letter from North Carolina to Pennsylvania in 18
 
 _date_posted Posted Feb. 16, 2022
 
-> If you do not know any other course
+_large_blockquote If you do not know any other course
 
 The process by which Confederate prisoners at Gettysburg could correspond with loved ones at home was a convoluted one. It involved stamps of both postal systems, a "flag of truce" that allowed mail to pass through the lines, and no expectation of privacy, as Benjamin Franklin Little of North Carolina explained to his wife in a letter written August 17, 1863.
 

@@ -9,7 +9,8 @@ with an emphasis on **dirty**
 - `_story_title `: Story Title
 - `_date_posted `: Posted `date`  
 - `_references `: References header (will always be "References")
-- `story_list_title `: Story title on main blog page  
+- `story_list_title `: Story title on main blog page
+- `_large_blockquote` : Blockquote but a bit larger, with even bigger quotation marks  
 - `# `: H1  
 - `## `: H2  
 - `### `: H3  
