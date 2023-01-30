@@ -90,35 +90,6 @@ p {
   padding: 1rem 0 0 2.2rem;
 }
 
-.comment {
-  padding: 1rem 0;
-}
-
-.comment-name {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #193366;
-  margin-bottom: 0.5rem;
-}
-
-.comment-date {
-  color: #193366;
-  font-size: 1.1rem;
-  padding-top: 0;
-  margin: 0 0 0.4rem 0;
-}
-
-.comment-message {
-  font-size: 1.3rem;
-  background-color: #f2f2f2;
-  padding: 1.8rem;
-  margin-bottom: 0.7rem;
-}
-
-.comments {
-  width: 75%;
-}
-
 .container {
   position: relative;
   min-height: 100vh;

@@ -141,12 +141,3 @@ OUTPUT_PAGES_DIR = OUTPUT_DIR / 'pages'
 
 INPUT_IMAGES_DIR = INPUT_DIR / 'images'
 OUTPUT_IMAGES_DIR = OUTPUT_DIR / 'images'
-
-# Staticman comments configuration
-# STATICMAN_URL = None
-STATICMAN_URL = 'https://clairempr-staticman.herokuapp.com/v2/entry/clairempr/clairempr.github.io/main/comments'
-COMMENTS_URL = 'https://raw.githubusercontent.com/clairempr/clairempr.github.io/main/data/comments/'
-# COMMENTS_URL = 'https://raw.githubusercontent.com/clairempr/file-list-action/main/data/comments/'
-COMMENT_FILE_TYPE = 'json'
-RECAPTCHA_SITE_KEY = '6LfBxqQeAAAAAHTFp6o8dgGLCm2bJo02e0QXJhIy'
-RECAPTCHA_SECRET_KEY = 'jlIrRcrjsIIgtPbTiiI36q2tLFcHQYNP9Z3aDbiqizwx8CIMB8221s/NsAPJmaUr+wz/knWkXrQNNmLpCUXqz6ZBp+S/zZUcUd3A06R8bmIwARyvIu5ah5+8DPb6uw4VoBJtX5qybOG7gBPSEgz19QF9meEcppOj2E9dKQGyviwEWtXTfnRsyVFkxkS8cb8NLhgajbOmMRX9ke4zdshj3/VyF42r0KMTAZZRW4dDKNLc0sdrRzySs187xH01jJh4ChVI3NOvDaPtmRABGAjn7FlTZo+U3Zel9msJynKQitxDhk+xMnNgAW9g539Yg5JpwoxDxuqPNeF8h8SWHwfL8swW8oOsSqFg7z2vE07i78rRqRLRCq2A/OS/JAnUQPBeTUtHp1Uy06FVlGH8LDSAM448hiZlO8hwAeXBBAZnL+7BGUPMA77DfYCsP578nbV3HgyRCwXMxSWBsWIQkGBYh1QW1Grz1nWFEbt1ooMSZDxszP1hzZpqGIExlIOed5N6mk4q9+dSSywaUTEwDCci21Jjsl6NmTKyP+ylCCO0oUBlkLTdkB7MpOKrV38pfYv+zu7uaVlni5rK2Ea/iD7biM4502nJW22XgJy+C2ergq5jQ852vQpFW73MlCM1nhk/qp9/DzehYE/Ufe77XUW120GFHPmAPuZfLy/pEhC+wiM='

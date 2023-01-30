@@ -2,11 +2,11 @@ _story_title Twisty Little Passages: Comments on a Quick and Dirty Blog
 
 _story_list_title Twisty little passages: Comments on a quick & dirty blog  
 
-_date_posted Posted Mar. 02, 2022
+_date_posted Updated Jan. 29, 2023
 
 _large_blockquote You are in a maze of twisty little passages
 
-When I wanted to add comments to this blog, which consists of static pages, I considered and rejected commenting systems that cost money and those that require users to have a GitHub account, as the content of my posts is as much about American history as it is about technical topics. I settled on <a href="https://staticman.net/">Staticman</a>, which is free, and has been used successfuly on other GitHub pages. Staticman is free, and it supports <a href="https://www.google.com/recaptcha/about/">reCaptcha</a>, spam filtering with <a href="https://akismet.com/">Akismet</a>, moderation, and email notifications from providers that all have a free tier. It's also open source. Comments can be left anonymously if that's what you want, and the data is stored in your GitHub repo, so you have complete control over it.   
+When I wanted to add comments (since removed) to this blog, which consists of static pages, I considered and rejected commenting systems that cost money and those that require users to have a GitHub account, as the content of my posts is as much about American history as it is about technical topics. I settled on <a href="https://staticman.net/">Staticman</a>, which is free, and has been used successfuly on other GitHub pages. Staticman is free, and it supports <a href="https://www.google.com/recaptcha/about/">reCaptcha</a>, spam filtering with <a href="https://akismet.com/">Akismet</a>, moderation, and email notifications from providers that all have a free tier. It's also open source. Comments can be left anonymously if that's what you want, and the data is stored in your GitHub repo, so you have complete control over it.   
 
 This control over the comment data is what ultimately allowed me to get it working on my site, albeit in an extremely convoluted and kind of ridiculous way. I'm going to explain the process that I came up with.  
 
@@ -93,7 +93,9 @@ The main thing I'm not happy with, aside from my ugly Javascript and the delay i
 
 ![Spam error](https://clairempr.github.io/images/akismet_spam_error.png width="775" 'Akismet spam error message')
 
-So there you have it, unless I've forgotten a step already. Getting comments onto this quick and dirty blog page involved a journey along some really twisty little passages, and if anyone has a more elegant solution, I'd be glad to hear it.  
+So there you have it, unless I've forgotten a step already. Getting comments onto this quick and dirty blog page involved a journey along some really twisty little passages.  
+
+Comments have been removed from the blog since I wrote this, because I decided that it wasn't worth the price of Heroku's new pricing.
 
 _references References
 - <a href="https://staticman.net/">Staticman</a>
