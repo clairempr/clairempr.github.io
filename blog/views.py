@@ -109,7 +109,7 @@ class GenerateBlogView(TemplateView):
         """
         Generate stories from markdown files and return list of stories
 
-        A story has a filename, title, and date posted
+        A story has a filename, title, and date posted or updated
         """
 
         stories = []
@@ -123,9 +123,10 @@ class GenerateBlogView(TemplateView):
             self.generate_story_page(markdown_elements=markdown_elements, html_filename=html_filename)
 
             story_list_title = get_story_list_title_from_markdown(markdown_elements)
-            date_posted = datetime.strptime(get_date_posted_from_markdown(markdown_elements).lstrip('Posted '),
-                                            '%b. %d, %Y').date()
-            story_elements = (html_filename, story_list_title, date_posted)
+            updated = 'Updated' in get_date_posted_from_markdown(markdown_elements)
+            date = datetime.strptime(get_date_posted_from_markdown(markdown_elements).lstrip('Posted ').lstrip('Updated '),
+                                     '%b. %d, %Y').date()
+            story_elements = (html_filename, story_list_title, date, updated)
             stories.append(story_elements)
 
         # Sort the list by date posted, in descending order

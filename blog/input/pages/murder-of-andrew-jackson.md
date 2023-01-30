@@ -2,7 +2,7 @@ _story_title The Murder of Andrew Jackson
 
 _story_list_title The murder of Andrew Jackson  
 
-_date_posted Posted Feb. 14, 2022
+_date_posted Updated Jan. 29, 2023
 
 _large_blockquote We have had a terrible thing occur here
 
@@ -12,7 +12,7 @@ Abraham Lincoln's Emancipation Proclamation had just gone into effect, and there
 
 !["Contrabands"](https://clairempr.github.io/images/contrabands_cropped.jpg width="500" 'Culpeper, Va. "Contrabands"')
 
-One of these refugees was Andrew, a boy who worked for Lieutenant Steel, an ordnance officer on Howard's staff. Also referred to as Jackson, Andrew was most likely named after the former president. He waited on the officers at table and exercised Steel's horse, among other duties. Howard described Andrew as "a mulatto of some eighteen years, of handsome figure, pleasant face and manners, and rather well dressed for the field. He appeared a little proud, especially when mounted on his employer's horse."
+One of these refugees was Andrew, a teenage boy who worked for Lieutenant William R. Steele, an ordnance officer on Howard's staff. Also referred to as Jackson, Andrew was most likely named after the former president. He waited on the officers at table and exercised Steele's horse, among other duties. Howard described Andrew as "a mulatto of some eighteen years, of handsome figure, pleasant face and manners, and rather well dressed for the field. He appeared a little proud, especially when mounted on his employer's horse."
 
 On Monday, January 12th, while he and another boy were returning on horseback from Falmouth with a load of clean laundry, Andrew was accosted by a couple of men identified as stragglers from the Irish Brigade. One of the men demanded that Andrew get off the horse and let him ride, but the boy refused; he was taking clothes to General Howard. The man cursed Andrew, declared that he'd "fix" him, raised his gun, and shot the boy. Despite being badly wounded, Andrew managed to ride back to headquarters, and his friend even managed to retrieve the washing that he had dropped.
 
@@ -51,6 +51,8 @@ _references References
 - C.H. Howard, letter to Eliza Gilmore, January 14, 1863, CHHC
 - Charles Howard diary, January 15, 1863, CHHC
 - Howard, O. O. (Oliver Otis), 1830-1909. “Autobiography of Oliver Otis Howard, Major general, United States army.” New York, The Baker & Taylor Company, 1907.
+- <a href="https://antietam.aotw.org/officers.php?officer_id=5802">Antietam on the Web: William Randolph Steele</a>
+- <a href="https://en.wikipedia.org/wiki/William_Randolph_Steele">Wikipedia: William Randolph Steele</a>
 - Image: <a href="https://www.loc.gov/pictures/collection/cwp/item/2018666349/">Culpeper, Va. "Contrabands"</a>, <a href="https://www.loc.gov/pictures/">Library of Congress Prints and Photographs Division</a>
 - Image: <a href="https://www.loc.gov/pictures/collection/cwp/item/2018666564/">Brandy Station, Va. Dinner party outside tent, Army of the Potomac headquarters</a>, <a href="https://www.loc.gov/pictures/">Library of Congress Prints and Photographs Division</a>
 - Image: <a href="https://www.loc.gov/pictures/collection/cwp/item/2018669843/">O.O. Howard</a>, <a href="https://www.loc.gov/pictures/">Library of Congress Prints and Photographs Division</a>

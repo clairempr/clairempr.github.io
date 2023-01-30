@@ -7,7 +7,7 @@ with an emphasis on **dirty**
 ### Uses custom Markdown to generate html "story" pages
 
 - `_story_title `: Story Title
-- `_date_posted `: Posted `date`  
+- `_date_posted `: Posted or updated date (ex. `_date_posted Posted Jan. 1, 1863` or `_date_posted Updated Jan. 1, 1864`)
 - `_references `: References header (will always be "References")
 - `story_list_title `: Story title on main blog page
 - `_large_blockquote` : Blockquote but a bit larger, with even bigger quotation marks  
