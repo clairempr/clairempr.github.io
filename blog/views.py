@@ -61,6 +61,7 @@ class GenerateBlogView(TemplateView):
 
         context['local_blog'] = self.local_blog
         context['page_title'] = settings.BLOG_TITLE
+        context['copyright_year'] = settings.COPYRIGHT_YEAR
 
         stories = self.generate_story_pages()
 
@@ -120,8 +121,6 @@ class GenerateBlogView(TemplateView):
             html_filename = os.path.basename(markdown_file).replace('.md', '.html')
             markdown_elements = parse_markdown_file(markdown_file)
 
-            self.generate_story_page(markdown_elements=markdown_elements, html_filename=html_filename)
-
             story_list_title = get_story_list_title_from_markdown(markdown_elements)
             updated = 'Updated' in get_date_posted_from_markdown(markdown_elements)
             date = datetime.strptime(get_date_posted_from_markdown(markdown_elements).lstrip('Posted ').lstrip('Updated '),
@@ -129,11 +128,15 @@ class GenerateBlogView(TemplateView):
             story_elements = (html_filename, story_list_title, date, updated)
             stories.append(story_elements)
 
+            copyright_year = date.year
+            self.generate_story_page(markdown_elements=markdown_elements, html_filename=html_filename, copyright_year=copyright_year)
+
+
         # Sort the list by date posted, in descending order
         stories.sort(key=lambda x: x[2], reverse=True)
         return stories
 
-    def generate_story_page(self, markdown_elements, html_filename):
+    def generate_story_page(self, markdown_elements, html_filename, copyright_year):
         """
         Generate a story page using elements from the markdown file to fill the template
         """
@@ -142,6 +145,7 @@ class GenerateBlogView(TemplateView):
                    'story_title': get_story_title_from_markdown(markdown_elements),
                    'date_posted': get_date_posted_from_markdown(markdown_elements),
                    'story_content': render_story_content(get_story_content_from_markdown(markdown_elements)),
+                   'copyright_year': copyright_year,
                    'html_filename': html_filename,
                    }
 
@@ -191,6 +195,7 @@ class GeneratedIndexView(TemplateView):
 
         context['page_title'] = 'This page intentionally left blank'
         context['stories'] = self.get_stories()
+        context['copyright_year'] = settings.COPYRIGHT_YEAR
 
         return context
 
@@ -208,9 +213,10 @@ class GeneratedIndexView(TemplateView):
         for markdown_file in markdown_files:
             html_filename = os.path.basename(markdown_file).replace('.md', '.html')
             markdown_elements = parse_markdown_file(markdown_file)
-
-            date_posted = datetime.strptime(get_date_posted_from_markdown(markdown_elements).lstrip('Posted '), '%b. %d, %Y').date()
-            story_elements = (html_filename, get_story_list_title_from_markdown(markdown_elements), date_posted)
+            date = datetime.strptime(get_date_posted_from_markdown(markdown_elements).lstrip('Posted ').lstrip('Updated '),
+                                     '%b. %d, %Y').date()
+            updated = 'Updated' in get_date_posted_from_markdown(markdown_elements)
+            story_elements = (html_filename, get_story_list_title_from_markdown(markdown_elements), date, updated)
             stories.append(story_elements)
 
         # Sort the list by date posted, in descending order
